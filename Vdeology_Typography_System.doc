@@ -1,0 +1,210 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+    <meta charset="utf-8">
+    <title>Vdeology Studios - Typography System</title>
+    <style>
+        body {
+            font-family: "Inter", "Helvetica Neue", sans-serif;
+            color: #111111;
+            line-height: 1.6;
+            margin: 40px;
+            max-width: 800px;
+        }
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+            color: #000000;
+        }
+        h1 { font-size: 44px; line-height: 1.1; letter-spacing: -0.02em; }
+        h2 { font-size: 35px; line-height: 1.2; letter-spacing: -0.01em; }
+        h3 { font-size: 28px; line-height: 1.3; font-weight: 600; }
+        h4 { font-size: 23px; line-height: 1.4; font-weight: 600; }
+        p { font-size: 18px; margin-bottom: 1.5em; }
+        .small-text { font-size: 15px; color: #555555; }
+        .note {
+            background-color: #f8f8f8;
+            padding: 20px;
+            border-left: 4px solid #000000;
+            margin: 30px 0;
+            font-size: 16px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+        th, td {
+            border: 1px solid #e0e0e0;
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 15px;
+        }
+        th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+            color: #000;
+        }
+        .header {
+            border-bottom: 2px solid #000;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+        .subtitle {
+            font-size: 23px;
+            color: #666;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 style="margin-top:0;">Vdeology Studios</h1>
+        <p class="subtitle">Typography Design System</p>
+    </div>
+
+    <div class="note">
+        <strong>Aesthetic Vision:</strong> Apple meets A24 meets premium design agency.<br><br>
+        <strong>Rules Applied:</strong>
+        <ul>
+            <li>One unified font system across the entire site (Recommended: <strong>Inter</strong> for clean, minimalist Apple vibes, or <strong>PP Neue Montreal</strong> for an editorial A24 feel).</li>
+            <li>Identical scaling ratios site-wide using the <strong>Major Third (1.25)</strong> scale.</li>
+            <li>Generous whitespace, rhythmic line-heights, and cinematic headings.</li>
+        </ul>
+    </div>
+
+    <h2>1. Desktop Typography (Base 18px)</h2>
+    <p>Using a base of 18px provides a highly readable, premium editorial feel for larger screens. Every size is proportionally scaled by exactly <strong>1.25x</strong>.</p>
+    <table>
+        <tr>
+            <th>Element</th>
+            <th>Formula</th>
+            <th>Size (px)</th>
+            <th>Size (rem)</th>
+            <th>Line-Height</th>
+            <th>Weight</th>
+            <th>Letter-Spacing</th>
+        </tr>
+        <tr>
+            <td><strong>H1 (Cinematic)</strong></td>
+            <td>~2.44x</td>
+            <td><strong>44px</strong></td>
+            <td>2.44rem</td>
+            <td>1.1</td>
+            <td>Bold (700)</td>
+            <td>-0.02em</td>
+        </tr>
+        <tr>
+            <td><strong>H2 (Section)</strong></td>
+            <td>~1.95x</td>
+            <td><strong>35px</strong></td>
+            <td>1.95rem</td>
+            <td>1.2</td>
+            <td>Bold (700)</td>
+            <td>-0.01em</td>
+        </tr>
+        <tr>
+            <td><strong>H3 (Supporting)</strong></td>
+            <td>~1.56x</td>
+            <td><strong>28px</strong></td>
+            <td>1.56rem</td>
+            <td>SemiBold (600)</td>
+            <td>1.3</td>
+            <td>Normal</td>
+        </tr>
+        <tr>
+            <td><strong>H4 (Small Heading)</strong></td>
+            <td>1.25x</td>
+            <td><strong>23px</strong></td>
+            <td>1.25rem</td>
+            <td>SemiBold (600)</td>
+            <td>1.4</td>
+            <td>Normal</td>
+        </tr>
+        <tr>
+            <td><strong>Body Text</strong></td>
+            <td>1.0x</td>
+            <td><strong>18px</strong></td>
+            <td>1.0rem</td>
+            <td>Regular (400)</td>
+            <td>1.6</td>
+            <td>Normal</td>
+        </tr>
+        <tr>
+            <td><strong>Buttons / Nav</strong></td>
+            <td>1.0x</td>
+            <td><strong>18px</strong></td>
+            <td>1.0rem</td>
+            <td>Medium (500)</td>
+            <td>1.0</td>
+            <td>+0.02em</td>
+        </tr>
+        <tr>
+            <td><strong>Small / Captions</strong></td>
+            <td>0.85x</td>
+            <td><strong>15px</strong></td>
+            <td>0.85rem</td>
+            <td>Regular (400)</td>
+            <td>1.5</td>
+            <td>+0.01em</td>
+        </tr>
+    </table>
+
+    <h2>2. Mobile Typography (Base 16px)</h2>
+    <p>For mobile, we drop the base to 16px to conserve space but strictly maintain the 1.25x scaling ratio to preserve the visual hierarchy and rhythm.</p>
+    <table>
+        <tr>
+            <th>Element</th>
+            <th>Formula</th>
+            <th>Size (px)</th>
+            <th>Size (rem)</th>
+        </tr>
+        <tr>
+            <td><strong>H1</strong></td>
+            <td>~2.44x</td>
+            <td><strong>39px</strong></td>
+            <td>2.44rem</td>
+        </tr>
+        <tr>
+            <td><strong>H2</strong></td>
+            <td>~1.95x</td>
+            <td><strong>31px</strong></td>
+            <td>1.95rem</td>
+        </tr>
+        <tr>
+            <td><strong>H3</strong></td>
+            <td>~1.56x</td>
+            <td><strong>25px</strong></td>
+            <td>1.56rem</td>
+        </tr>
+        <tr>
+            <td><strong>H4</strong></td>
+            <td>1.25x</td>
+            <td><strong>20px</strong></td>
+            <td>1.25rem</td>
+        </tr>
+        <tr>
+            <td><strong>Body Text</strong></td>
+            <td>1.0x</td>
+            <td><strong>16px</strong></td>
+            <td>1.0rem</td>
+        </tr>
+        <tr>
+            <td><strong>Small / Captions</strong></td>
+            <td>0.85x</td>
+            <td><strong>14px</strong></td>
+            <td>0.85rem</td>
+        </tr>
+    </table>
+
+    <h2>3. Rhythm and Spacing Rules</h2>
+    <ul>
+        <li><strong>Tighten Large Text:</strong> As text gets larger (H1, H2), line-heights become tighter (1.1 to 1.2) and letter-spacing becomes slightly negative. This gives headings a locked-in, cinematic presence.</li>
+        <li><strong>Breathe Small Text:</strong> Body text (18px) uses a generous 1.6 line-height to feel luxurious and easy to read, reminiscent of high-end editorial magazines.</li>
+        <li><strong>Buttons and Labels:</strong> Interactive elements should use a Medium (500) weight and slightly increased letter-spacing (+0.02em) to distinguish them from standard body text without changing the size.</li>
+        <li><strong>Margin Spacing:</strong> Vertical rhythm should be driven by the body text line-height. Use multiples of <code>1.5rem</code> or <code>2rem</code> for spacing between distinct sections to maintain clean, deliberate whitespace.</li>
+    </ul>
+
+</body>
+</html>

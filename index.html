@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+
+<html class="dark scroll-smooth" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>VDEOLOGY Studios | Vishnu Sreedev</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&amp;family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Epilogue:wght@100..900&amp;family=Manrope:wght@200..800&amp;family=IBM+Plex+Mono:wght@300;400;500;600&amp;family=Inter:wght@400;500&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Fontshare for General Sans -->
+    <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#353437",
+                        "surface-container-highest": "#353437",
+                        "on-background": "#e5e1e5",
+                        "surface-bright": "#39393c",
+                        "on-secondary-fixed-variant": "#594320",
+                        "secondary": "#C8A97E",
+                        "on-tertiary-fixed": "#001d35",
+                        "surface-container-high": "#2a2a2c",
+                        "tertiary-fixed": "#d0e4ff",
+                        "primary-container": "#f95e26",
+                        "error-container": "#93000a",
+                        "tertiary-container": "#2696eb",
+                        "surface-container-lowest": "#0e0e10",
+                        "tertiary-fixed-dim": "#9ccaff",
+                        "secondary-container": "#594320",
+                        "on-secondary-container": "#d0b085",
+                        "tertiary": "#9ccaff",
+                        "inverse-on-surface": "#313033",
+                        "surface-tint": "#ffb59e",
+                        "primary": "#E8521A",
+                        "on-secondary": "#402d0c",
+                        "on-tertiary-fixed-variant": "#00497a",
+                        "primary-fixed": "#ffdbd0",
+                        "on-primary-fixed-variant": "#842500",
+                        "outline": "#aa8a80",
+                        "surface-dim": "#131316",
+                        "on-tertiary": "#003256",
+                        "surface-container": "#201f22",
+                        "inverse-surface": "#e5e1e5",
+                        "primary-fixed-dim": "#ffb59e",
+                        "surface": "#060608",
+                        "on-tertiary-container": "#002b4c",
+                        "on-primary": "#FFFFFF",
+                        "on-error": "#690005",
+                        "on-surface": "#e5e1e5",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed": "#ffddb0",
+                        "inverse-primary": "#ad3300",
+                        "secondary-fixed-dim": "#e2c195",
+                        "on-primary-container": "#521400",
+                        "error": "#ffb4ab",
+                        "background": "#060608",
+                        "on-primary-fixed": "#390b00",
+                        "on-surface-variant": "#e3bfb4",
+                        "outline-variant": "#5a4139",
+                        "on-secondary-fixed": "#281800",
+                        "surface-container-low": "#1c1b1e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["General Sans", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["General Sans", "sans-serif"],
+                        "serif": ["General Sans", "sans-serif"],
+                        "general": ["General Sans", "sans-serif"],
+                        "inter": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body class="selection:bg-primary selection:text-white">
+    <!-- ===== FILM GRAIN OVERLAY ===== -->
+    <svg class="film-grain" id="film-grain">
+        <filter id="noise-filter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noise-filter)" />
+    </svg>
+
+    <!-- ===== CINEMATIC BACKGROUND VIDEO ===== -->
+    <div class="hero-video-wrapper" id="hero-video-wrapper">
+        <iframe class="hero-video" id="hero-video" src="https://player.mediadelivery.net/embed/680285/de094850-815e-4407-a6df-4fce2b2ac15e?autoplay=true&loop=true&muted=true&preload=true&responsive=true" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%; height:100%; position:absolute; top:0; left:0; border:none; pointer-events:none;"></iframe>
+        <!-- Overlay 1: Cinematic gradient -->
+        <div class="hero-video-overlay" id="hero-video-overlay"></div>
+    </div>
+
+    <!-- ===== CUSTOM CURSOR ===== -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
+
+    <!-- ===== SCROLL PROGRESS BAR ===== -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- Shared TopNavBar -->
+    <nav id="main-nav"
+        class="nav-global fixed top-0 w-full z-50 flex justify-between items-center px-12 py-6 bg-transparent">
+        <!-- Left: Brand -->
+        <a href="#hero-section"
+            class="font-general font-bold text-2xl tracking-tighter text-white uppercase hover:text-white/80 transition-colors duration-300">
+            VDEOLOGY
+        </a>
+        <!-- Center: Navigation Links -->
+        <div class="hidden md:flex gap-12 items-center">
+            <a class="nav-link font-inter text-[0.75rem] font-medium tracking-[0.1em] uppercase text-white hover:text-white/60 transition-colors duration-300"
+                href="#work">WORK</a>
+            <a class="nav-link font-inter text-[0.75rem] font-medium tracking-[0.1em] uppercase text-white hover:text-white/60 transition-colors duration-300"
+                href="#masters-section">EXPERTISE</a>
+            <a class="nav-link font-inter text-[0.75rem] font-medium tracking-[0.1em] uppercase text-white hover:text-white/60 transition-colors duration-300"
+                href="#story">FOUNDER</a>
+        </div>
+        <!-- Right: Editorial CTA -->
+        <a href="#contact" class="nav-cta-editorial">Start a Project</a>
+    </nav>
+    <main>
+        <!-- ===== HERO SECTION ===== -->
+        <section id="hero-section" class="hero-cinematic">
+
+            <!-- Centered Content -->
+            <div class="hero-content" id="hero-content">
+
+                <!-- Eyebrow Label -->
+                <div class="hero-eyebrow-wrap">
+                    <span class="hero-eyebrow" id="hero-eyebrow">FOUNDER-LED CREATIVE STUDIO</span>
+                </div>
+
+                <!-- Main Heading -->
+                <div class="hero-title-wrap">
+                    <h1 class="hero-title" id="hero-title">VDEOLOGY</h1>
+                </div>
+
+                <!-- Subtitle -->
+                <div class="hero-subtitle-wrap">
+                    <p class="hero-subtitle" id="hero-subtitle">Cinematic storytelling for brands, creators &amp; modern
+                        media.</p>
+                </div>
+
+                <!-- Buttons -->
+                <div class="hero-buttons-wrap">
+                    <div class="hero-buttons" id="hero-buttons">
+                        <a href="#work" class="hero-btn">VIEW WORK</a>
+                        <a href="#contact" class="hero-btn">START A PROJECT</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="scroll-indicator" id="scroll-indicator">
+                <span class="label">Scroll</span>
+                <div class="line"></div>
+            </div>
+
+        </section>
+
+        <!-- ===== STUDIO ETHOS SECTION ===== -->
+        <!-- ═══════════════════════════════════════════════════════════
+             HERO → WORK CINEMATIC INTERLUDE
+        ═══════════════════════════════════════════════════════════ -->
+        <section class="ethos-interlude" id="ethos">
+
+            <!-- Inner Container -->
+            <div class="ethos-inner">
+
+                <!-- LEFT: Staggered headline reveal -->
+                <div class="ethos-headline-col" id="ethos-headline-col">
+                    <h2 class="ethos-headline">
+                        <div class="ethos-mask-wrap"><span class="ethos-mask-line ethos-line-1">EVERY FRAME</span></div>
+                        <div class="ethos-mask-wrap"><span class="ethos-mask-line ethos-line-2">SHOULD MOVE</span></div>
+                        <div class="ethos-mask-wrap"><span class="ethos-mask-line ethos-line-3">SOMETHING.</span></div>
+                    </h2>
+                </div>
+
+                <!-- RIGHT: Studio Ethos text blocks -->
+                <div class="ethos-text-col">
+                    <div class="ethos-label ethos-stagger-1">STUDIO ETHOS</div>
+                    <p class="ethos-body ethos-stagger-2">
+                        Founded by Vishnu Sreedev, Vdeology is a creative studio for leaders, visionaries, and
+                        organizations building the future.<br><br>
+                        We believe great storytelling is more than content. It's how ideas gain momentum, movements
+                        inspire believers, and brands become unforgettable.
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- ── CONTINUOUS TESTIMONIAL MARQUEE ── -->
+            <div class="ethos-marquee-section">
+                <!-- Fade edges -->
+                <div class="ethos-marquee-fade ethos-marquee-fade--left"></div>
+                <div class="ethos-marquee-fade ethos-marquee-fade--right"></div>
+
+                <div class="ethos-marquee-track" id="ethos-marquee-track">
+                    <!-- Strip A -->
+                    <div class="ethos-marquee-strip">
+                        <div class="ethos-quote-card">
+                            <p class="ethos-quote-text">"Can't say enough great things about your GOAT'd skillset. I'm
+                                glad I stumbled upon the miracle of meeting you."</p>
+                            <div class="ethos-quote-author">Alfred Konuwa</div>
+                            <div class="ethos-quote-role">Forbes Writer & Stand-Up Comedian</div>
+                        </div>
+                        <div class="ethos-quote-divider"></div>
+                        <div class="ethos-quote-card">
+                            <p class="ethos-quote-text">"Absolutely brilliant. This documentary has changed the lives of
+                                so many people."</p>
+                            <div class="ethos-quote-author">Jon Owens</div>
+                            <div class="ethos-quote-role">Veteran British Wrestling Coach</div>
+                        </div>
+                        <div class="ethos-quote-divider"></div>
+                        <div class="ethos-quote-card">
+                            <p class="ethos-quote-text">"Every deliverable exceeded what we imagined. The attention to
+                                pacing is unreal."</p>
+                            <div class="ethos-quote-author">Debojit Dasgupta</div>
+                            <div class="ethos-quote-role">CEO, Fight Pundit</div>
+                        </div>
+                        <div class="ethos-quote-divider"></div>
+                        <div class="ethos-quote-card">
+                            <p class="ethos-quote-text">"A lot of people can edit. Not everyone understands rhythm,
+                                storytelling, and cultural context. You did. That's the difference."</p>
+                            <div class="ethos-quote-author">Nifty Noel</div>
+                            <div class="ethos-quote-role">Filmmaker · Netflix, BBC & Roughcut</div>
+                        </div>
+                        <div class="ethos-quote-divider"></div>
+                        <div class="ethos-quote-card">
+                            <p class="ethos-quote-text">"I've rarely met someone who works as hard as Vishnu. The care
+                                and dedication he puts into every project shine through in the final result."</p>
+                            <div class="ethos-quote-author">Kevin Kellam</div>
+                            <div class="ethos-quote-role">Wrestling Journalist & Media Personality, USA</div>
+                        </div>
+                        <div class="ethos-quote-divider"></div>
+                        <div class="ethos-quote-card">
+                            <p class="ethos-quote-text">"Growing a channel from 30K to 200K subscribers in two years is
+                                unreal. Massive congratulations for the hard work and dedication."</p>
+                            <div class="ethos-quote-author">Manu Pratap Singh</div>
+                            <div class="ethos-quote-role">Video Marketing Head, Sportskeeda Wrestling</div>
+                        </div>
+                        <div class="ethos-quote-divider"></div>
+                        <div class="ethos-quote-card">
+                            <p class="ethos-quote-text">"The care and storytelling Vishnu brought to each film made our
+                                couples feel truly seen. The response from clients was incredible."</p>
+                            <div class="ethos-quote-author">Videographes Paris</div>
+                            <div class="ethos-quote-role">International Wedding Studio</div>
+                        </div>
+                        <div class="ethos-quote-divider"></div>
+                    </div>
+                    <!-- Strip B: seamless clone for infinite loop -->
+                    <div class="ethos-marquee-strip" aria-hidden="true">
+                        <div class="ethos-quote-card">
+                            <p class="ethos-quote-text">"Can't say enough great things about your GOAT'd skillset. I'm
+                                glad I stumbled upon the miracle of meeting you."</p>
+                            <div class="ethos-quote-author">Alfred Konuwa</div>
+                            <div class="ethos-quote-role">Forbes Writer & Stand-Up Comedian</div>
+                        </div>
+                        <div class="ethos-quote-divider"></div>
+                        <div class="ethos-quote-card">
+                            <p class="ethos-quote-text">"Absolutely brilliant. This documentary has changed the lives of
+                                so many people."</p>
+                            <div class="ethos-quote-author">Jon Owens</div>
+                            <div class="ethos-quote-role">Veteran British Wrestling Coach</div>
+                        </div>
+                        <div class="ethos-quote-divider"></div>
+                        <div class="ethos-quote-card">
+                            <p class="ethos-quote-text">"Every deliverable exceeded what we imagined. The attention to
+                                pacing is unreal."</p>
+                            <div class="ethos-quote-author">Debojit Dasgupta</div>
+                            <div class="ethos-quote-role">CEO, Fight Pundit</div>
+                        </div>
+                        <div class="ethos-quote-divider"></div>
+                        <div class="ethos-quote-card">
+                            <p class="ethos-quote-text">"A lot of people can edit. Not everyone understands rhythm,
+                                storytelling, and cultural context. You did. That's the difference."</p>
+                            <div class="ethos-quote-author">Nifty Noel</div>
+                            <div class="ethos-quote-role">Filmmaker · Netflix, BBC & Roughcut</div>
+                        </div>
+                        <div class="ethos-quote-divider"></div>
+                        <div class="ethos-quote-card">
+                            <p class="ethos-quote-text">"I've rarely met someone who works as hard as Vishnu. The care
+                                and dedication he puts into every project shine through in the final result."</p>
+                            <div class="ethos-quote-author">Kevin Kellam</div>
+                            <div class="ethos-quote-role">Wrestling Journalist & Media Personality, USA</div>
+                        </div>
+                        <div class="ethos-quote-divider"></div>
+                        <div class="ethos-quote-card">
+                            <p class="ethos-quote-text">"Growing a channel from 30K to 200K subscribers in two years is
+                                unreal. Massive congratulations for the hard work and dedication."</p>
+                            <div class="ethos-quote-author">Manu Pratap Singh</div>
+                            <div class="ethos-quote-role">Video Marketing Head, Sportskeeda Wrestling</div>
+                        </div>
+                        <div class="ethos-quote-divider"></div>
+                        <div class="ethos-quote-card">
+                            <p class="ethos-quote-text">"The care and storytelling Vishnu brought to each film made our
+                                couples feel truly seen. The response from clients was incredible."</p>
+                            <div class="ethos-quote-author">Videographes Paris</div>
+                            <div class="ethos-quote-role">International Wedding Studio</div>
+                        </div>
+                        <div class="ethos-quote-divider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Soft gradient bridge into Work section -->
+            <div class="ethos-bridge-gradient"></div>
+
+        </section>
+
+        <!-- Featured Work - 12. Cinematic Showcase -->
+        <section id="work" class="relative bg-surface overflow-hidden">
+            <div class="px-6 md:px-12 pt-28 pb-12">
+                <div class="flex justify-end items-center mb-1 gap-8 reveal-on-scroll">
+                    <span
+                        class="font-general font-semibold text-[#C8A97E] text-[0.75rem] tracking-[0.25em] uppercase text-right">SELECTED
+                        STORIES</span>
+                </div>
+            </div>
+
+            <!-- Cinematic Showcase Outer Container -->
+            <div class="showcase-outer" id="showcase-outer">
+                <!-- Top Row Wrapper -->
+                <div class="showcase-row-wrapper top-row-wrapper pb-6">
+                    <div class="showcase-track" id="showcase-track-top">
+                        <!-- Cards rendered dynamically by JS -->
+                    </div>
+                </div>
+
+                <!-- Editorial Statement -->
+                <div class="showcase-editorial-wrap py-24 text-center reveal-on-scroll">
+                    <h2
+                        class="font-general font-bold text-white uppercase text-[clamp(2.5rem,7.5vw,7.5rem)] leading-[0.9] tracking-tight">
+                        STORIES THAT<br>WILL LIVE ON.
+                    </h2>
+                </div>
+
+                <!-- Bottom Row Wrapper -->
+                <div class="showcase-row-wrapper bottom-row-wrapper pt-6">
+                    <div class="showcase-track" id="showcase-track-bottom">
+                        <!-- Cards rendered dynamically by JS -->
+                    </div>
+                </div>
+
+                <!-- Below Second Project Row Footer -->
+                <div class="showcase-footer text-center pt-24 pb-12 reveal-on-scroll">
+                    <span
+                        class="font-inter font-medium text-white/30 text-[0.8rem] md:text-[0.95rem] tracking-[0.25em] uppercase">
+                        Documentary &bull; Educational &bull; Editorial &bull; Branded
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             EVERY FIELD HAS ITS MASTERS — Cinematic Identity Sequence
+             Fullscreen scroll-driven documentary title cards
+        ═══════════════════════════════════════════════════════════ -->
+        <section class="masters-section" id="masters-section">
+
+            <!-- Sticky viewport container — stays fixed while scrolling through identities -->
+            <div class="masters-viewport" id="masters-viewport">
+
+                <!-- Fullscreen background videos — one per identity -->
+                <div class="masters-bg" id="masters-bg">
+                    <div class="masters-bg-layer masters-bg-layer--active" data-masters-bg="0">
+                        <iframe src="https://player.mediadelivery.net/embed/680285/33e83dbe-ae93-4230-8da2-97e991d2a45c?autoplay=true&loop=true&muted=true&preload=true&responsive=true" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%; height:100%; position:absolute; top:0; left:0; border:none; pointer-events:none;"></iframe>
+                    </div>
+                    <div class="masters-bg-layer" data-masters-bg="1">
+                        <iframe src="https://player.mediadelivery.net/embed/680285/e4aefa1b-121d-4ff0-a385-cac8e0e3ef6b?autoplay=true&loop=true&muted=true&preload=true&responsive=true" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%; height:100%; position:absolute; top:0; left:0; border:none; pointer-events:none;"></iframe>
+                    </div>
+                    <div class="masters-bg-layer" data-masters-bg="2">
+                        <video autoplay loop muted playsinline
+                            poster="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1600&q=80&fit=crop">
+                            <source src="videos/the_coach_documentary.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="masters-bg-layer" data-masters-bg="3">
+                        <iframe src="https://player.mediadelivery.net/embed/680285/72f7842c-7db0-46e9-bf43-ae1631b5e9f5?autoplay=true&loop=true&muted=true&preload=true&responsive=true" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%; height:100%; position:absolute; top:0; left:0; border:none; pointer-events:none;"></iframe>
+                    </div>
+                    <div class="masters-bg-layer" data-masters-bg="4">
+                        <iframe src="https://player.mediadelivery.net/embed/680285/2a1f8b7e-54d6-48cf-8af6-8c0d2ac6ceb8?autoplay=true&loop=true&muted=true&preload=true&responsive=true" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%; height:100%; position:absolute; top:0; left:0; border:none; pointer-events:none;"></iframe>
+                    </div>
+
+                    <!-- Cinematic overlay gradient -->
+                    <div class="masters-bg-overlay"></div>
+                </div>
+
+                <!-- Persistent editorial chapter label — top right -->
+                <div class="masters-chapter-label" id="masters-chapter-label">
+                    <span class="masters-chapter-label-sub">EVERY FIELD HAS</span>
+                    <span class="masters-chapter-label-main">ITS MASTERS</span>
+                </div>
+
+                <!-- Progress counter — bottom right -->
+                <div class="masters-progress" id="masters-progress">
+                    <div class="masters-progress-segment masters-progress-segment--active" data-segment="0"></div>
+                    <div class="masters-progress-segment" data-segment="1"></div>
+                    <div class="masters-progress-segment" data-segment="2"></div>
+                    <div class="masters-progress-segment" data-segment="3"></div>
+                    <div class="masters-progress-segment" data-segment="4"></div>
+                </div>
+
+                <!-- Identity title cards — lower-left, documentary placement -->
+                <div class="masters-card masters-card--active" data-masters-card="0">
+                    <h2 class="masters-identity">ATHLETES</h2>
+                    <p class="masters-tagline">For those who dedicate years to mastering their craft.</p>
+                </div>
+
+                <div class="masters-card" data-masters-card="1">
+                    <h2 class="masters-identity">FOUNDERS</h2>
+                    <p class="masters-tagline">For those turning conviction into companies.</p>
+                </div>
+
+                <div class="masters-card" data-masters-card="2">
+                    <h2 class="masters-identity">EDUCATORS</h2>
+                    <p class="masters-tagline">For those shaping how people think.</p>
+                </div>
+
+                <div class="masters-card" data-masters-card="3">
+                    <h2 class="masters-identity">CREATORS</h2>
+                    <p class="masters-tagline">For those building audiences around ideas.</p>
+                </div>
+
+                <div class="masters-card" data-masters-card="4">
+                    <h2 class="masters-identity">STORYTELLERS</h2>
+                    <p class="masters-tagline">For those whose stories deserve to outlive them.</p>
+                </div>
+
+            </div>
+
+            <!-- Scroll spacer — tighter: ~60vh per step for responsive feel -->
+            <div class="masters-scroll-spacer" id="masters-scroll-spacer"></div>
+
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             FROM MASTERY TO INFLUENCE — Stacked Card Sequence
+        ═══════════════════════════════════════════════════════════ -->
+        <section class="influence-section" id="influence-section">
+            <div class="influence-viewport" id="influence-viewport">
+                <div class="influence-cards-container">
+
+                    <!-- CARD 1: DISCOVER -->
+                    <div class="influence-card influence-card--light influence-card--img-left" data-influence-card>
+                        <div class="influence-card-video-wrapper">
+                            <iframe src="https://player.mediadelivery.net/embed/680285/ecb5a432-d74d-46e0-ae66-26f633876c14?autoplay=true&loop=true&muted=true&preload=true&responsive=true" class="influence-card-video" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="border:none; pointer-events:none; width:100%; height:100%;"></iframe>
+                            <div class="influence-video-overlay"></div>
+                            <div class="influence-video-grain"></div>
+                            <div class="influence-video-vignette"></div>
+                        </div>
+                        <div class="influence-card-content">
+                            <span class="influence-chapter">CHAPTER I</span>
+                            <h3 class="influence-title">DISCOVER</h3>
+                            <p class="influence-desc">Identify the ideas, stories, and expertise worth amplifying.</p>
+
+                            <div class="influence-outputs">
+                                <span class="influence-outputs-label">WHAT WE BUILD HERE</span>
+                                <ul class="influence-outputs-list">
+                                    <li>Positioning</li>
+                                    <li>Knowledge Mapping</li>
+                                    <li>Audience Strategy</li>
+                                    <li>Story Discovery</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 2: SHAPE -->
+                    <div class="influence-card influence-card--dark influence-card--text-left" data-influence-card>
+                        <div class="influence-card-content">
+                            <span class="influence-chapter">CHAPTER II</span>
+                            <h3 class="influence-title">SHAPE</h3>
+                            <p class="influence-desc">Transform expertise into narratives people actually remember.</p>
+
+                            <div class="influence-outputs">
+                                <span class="influence-outputs-label">WHAT WE BUILD HERE</span>
+                                <ul class="influence-outputs-list">
+                                    <li>Educational Frameworks</li>
+                                    <li>Script Development</li>
+                                    <li>Podcast Concepts</li>
+                                    <li>Narrative Architecture</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="influence-card-video-wrapper">
+                            <iframe src="https://player.mediadelivery.net/embed/680285/0c49568f-4255-4353-8ee7-765af3611868?autoplay=true&loop=true&muted=true&preload=true&responsive=true" class="influence-card-video" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="border:none; pointer-events:none; width:100%; height:100%;"></iframe>
+                            <div class="influence-video-overlay"></div>
+                            <div class="influence-video-grain"></div>
+                            <div class="influence-video-vignette"></div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 3: CREATE -->
+                    <div class="influence-card influence-card--light influence-card--img-left" data-influence-card>
+                        <div class="influence-card-video-wrapper">
+                            <iframe src="https://player.mediadelivery.net/embed/680285/f3160400-a541-4688-bb31-199ad099c45a?autoplay=true&loop=true&muted=true&preload=true&responsive=true" class="influence-card-video" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="border:none; pointer-events:none; width:100%; height:100%;"></iframe>
+                            <div class="influence-video-overlay"></div>
+                            <div class="influence-video-grain"></div>
+                            <div class="influence-video-vignette"></div>
+                        </div>
+                        <div class="influence-card-content">
+                            <span class="influence-chapter">CHAPTER III</span>
+                            <h3 class="influence-title">CREATE</h3>
+                            <p class="influence-desc">Produce media that commands attention and builds authority.</p>
+
+                            <div class="influence-outputs">
+                                <span class="influence-outputs-label">WHAT WE BUILD HERE</span>
+                                <ul class="influence-outputs-list">
+                                    <li>Educational Media</li>
+                                    <li>Founder Content</li>
+                                    <li>Documentary Films</li>
+                                    <li>Podcasts</li>
+                                    <li>Thought Leadership Assets</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 4: MULTIPLY -->
+                    <div class="influence-card influence-card--dark influence-card--text-left" data-influence-card>
+                        <div class="influence-card-content">
+                            <span class="influence-chapter">CHAPTER IV</span>
+                            <h3 class="influence-title">MULTIPLY</h3>
+                            <p class="influence-desc">Turn a single idea into a scalable ecosystem of influence.</p>
+
+                            <div class="influence-outputs">
+                                <span class="influence-outputs-label">WHAT WE BUILD HERE</span>
+                                <ul class="influence-outputs-list">
+                                    <li>YouTube Systems</li>
+                                    <li>LinkedIn Content Engines</li>
+                                    <li>Knowledge Libraries</li>
+                                    <li>Learning Platforms</li>
+                                    <li>Authority Media Systems</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="influence-card-video-wrapper">
+                            <iframe src="https://player.mediadelivery.net/embed/680285/09333ba6-365a-459e-aa56-133e40096529?autoplay=true&loop=true&muted=true&preload=true&responsive=true" class="influence-card-video" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="border:none; pointer-events:none; width:100%; height:100%;"></iframe>
+                            <div class="influence-video-overlay"></div>
+                            <div class="influence-video-grain"></div>
+                            <div class="influence-video-vignette"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Scroll Spacer for pinned interaction -->
+            <div class="influence-scroll-spacer" id="influence-scroll-spacer"></div>
+        </section>
+
+
+
+        <!-- ═══════════════════════════════════════════════════════════
+             THE STORY BEHIND VDEOLOGY
+        ═══════════════════════════════════════════════════════════ -->
+        <section class="story-section" id="story">
+
+            <!-- Hero / Intro -->
+            <div class="story-hero">
+                <div class="story-portrait-wrapper cine-founder-portrait">
+                    <img class="story-portrait" src="images/founder-portrait.jpg" alt="Vishnu Sreedhar - Founder" />
+                    <!-- Dedicated museum glass overlay layer -->
+                    <div class="story-glass-overlay"></div>
+                </div>
+                <div class="story-intro">
+                    <h2 class="story-founder-name cine-founder-name">VISHNU SREEDEV</h2>
+                    <div class="story-roles cine-founder-desc">Filmmaker. Creative Director. Builder of Authority.</div>
+
+                    <div class="story-mission cine-founder-desc">
+                        <p>For the last six years, I've been obsessed with a simple question:</p>
+                        <p class="story-mission-highlight">Why do some ideas shape culture while others fade into noise?
+                        </p>
+                        <p>That question has taken me from growing audiences of millions to directing documentaries,
+                            building authority-driven media, and helping ambitious people earn attention, trust, and
+                            influence.</p>
+                        <p>Vdeology was built in pursuit of that answer.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Premium Editorial Grid -->
+            <div class="story-grid-premium">
+
+                <!-- Column 1: EXPERIENCE -->
+                <div class="story-column-premium cine-grid-col">
+                    <h3 class="story-col-title-premium">EXPERIENCE</h3>
+
+                    <div class="story-item-premium">
+                        <div class="story-item-header">
+                            <span class="story-item-meta">2019 — 2024</span>
+                            <span class="story-item-index">01</span>
+                        </div>
+                        <h4 class="story-item-title">SPORTSKEEDA WRESTLING</h4>
+                        <p class="story-item-desc">Led editing and content strategy for one of the world's largest
+                            wrestling media brands, helping grow the YouTube channel from 30K to 190K subscribers,
+                            generating 50M+ views and more than 2 million watch hours.</p>
+                    </div>
+
+                    <div class="story-item-premium">
+                        <div class="story-item-header">
+                            <span class="story-item-meta">2024 — PRESENT</span>
+                            <span class="story-item-index">02</span>
+                        </div>
+                        <h4 class="story-item-title">DOCUMENTARY FILMMAKING</h4>
+                        <p class="story-item-desc">Directed and edited independent documentaries exploring sport,
+                            culture, and human stories, including The Coach: The Fight for British Wrestling, a finalist
+                            at the Serbest International Film Festival.</p>
+                    </div>
+
+                    <div class="story-item-premium">
+                        <div class="story-item-header">
+                            <span class="story-item-meta">2025 — PRESENT</span>
+                            <span class="story-item-index">03</span>
+                        </div>
+                        <h4 class="story-item-title">VDEOLOGY STUDIOS</h4>
+                        <p class="story-item-desc">Partnered with global brands and elite creators to design
+                            authority-building content pipelines and premium visual systems.</p>
+                    </div>
+                </div>
+
+                <!-- Column 2: EXPERTISE -->
+                <div class="story-column-premium cine-grid-col" style="transition-delay: 0.1s;">
+                    <h3 class="story-col-title-premium">EXPERTISE</h3>
+
+                    <div class="story-item-premium">
+                        <div class="story-item-header">
+                            <h4 class="story-item-title">STORYTELLING & PSYCHOLOGY</h4>
+                            <span class="story-item-index">01</span>
+                        </div>
+                        <p class="story-item-desc">Deep understanding of audience retention, narrative tension, and the
+                            psychological triggers that transform passive viewers into loyal advocates.</p>
+                    </div>
+
+                    <div class="story-item-premium">
+                        <div class="story-item-header">
+                            <h4 class="story-item-title">AUTHORITY BUILDING</h4>
+                            <span class="story-item-index">02</span>
+                        </div>
+                        <p class="story-item-desc">Positioning brands and creators as undeniable industry leaders
+                            through high-signal content and premium positioning.</p>
+                    </div>
+
+                    <div class="story-item-premium">
+                        <div class="story-item-header">
+                            <h4 class="story-item-title">CREATIVE DIRECTION</h4>
+                            <span class="story-item-index">03</span>
+                        </div>
+                        <p class="story-item-desc">Leading projects from concept to delivery across documentaries,
+                            digital media, branded content, and educational experiences.</p>
+                    </div>
+
+                    <div class="story-item-premium">
+                        <div class="story-item-header">
+                            <h4 class="story-item-title">POST-PRODUCTION</h4>
+                            <span class="story-item-index">04</span>
+                        </div>
+                        <p class="story-item-desc">Advanced editing, color grading, sound design, and motion design
+                            using DaVinci Resolve and Adobe Creative Suite.</p>
+                    </div>
+                </div>
+
+                <!-- Column 3: SELECTED BUILDS -->
+                <div class="story-column-premium cine-grid-col" style="transition-delay: 0.2s;">
+                    <h3 class="story-col-title-premium">SELECTED BUILDS</h3>
+
+                    <div class="story-item-premium">
+                        <div class="story-item-header">
+                            <h4 class="story-item-title">THE COACH</h4>
+                            <span class="story-item-index">01</span>
+                        </div>
+                        <p class="story-item-desc">Award-winning documentary exploring the life and mission of veteran
+                            British wrestling coach Jon Owens.</p>
+                    </div>
+
+                    <div class="story-item-premium">
+                        <div class="story-item-header">
+                            <h4 class="story-item-title">FIGHTPUNDIT</h4>
+                            <span class="story-item-index">02</span>
+                        </div>
+                        <p class="story-item-desc">Cinematic combat sports storytelling, event coverage, and promotional
+                            campaigns for one of India's leading BJJ organizations.</p>
+                    </div>
+
+                    <div class="story-item-premium">
+                        <div class="story-item-header">
+                            <h4 class="story-item-title">KATANA</h4>
+                            <span class="story-item-index">03</span>
+                        </div>
+                        <p class="story-item-desc">Brand development, creative direction, and content production for a
+                            combat sports equipment company.</p>
+                    </div>
+
+                    <div class="story-item-premium">
+                        <div class="story-item-header">
+                            <h4 class="story-item-title">VDEOLOGY STUDIOS</h4>
+                            <span class="story-item-index">04</span>
+                        </div>
+                        <p class="story-item-desc">An independent creative studio producing documentaries, branded
+                            content, educational media, and authority-driven storytelling.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Founder Statement -->
+            <div class="story-statement cine-masters-trigger">
+                <div class="cine-mask-wrapper">
+                    <h2 class="cine-mask-line cine-masters-l1" style="margin:0;">Every field has its masters.</h2>
+                </div>
+                <h2 class="story-statement-highlight cine-masters-sub">The challenge is making<br>the world pay
+                    attention.</h2>
+            </div>
+
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             FINAL CTA SECTION
+        ═══════════════════════════════════════════════════════════ -->
+        <section class="final-cta-section" id="contact">
+            <div class="final-cta-left cine-cta-trigger">
+                <h2 class="final-cta-headline">
+                    <div class="cine-mask-wrapper"><span class="cine-mask-line cine-cta-l1">LET'S BUILD</span></div>
+                    <div class="cine-mask-wrapper"><span class="cine-mask-line cine-cta-l2">SOMETHING</span></div>
+                    <div class="cine-mask-wrapper"><span class="cine-mask-line cine-cta-l3">WORTH</span></div>
+                    <div class="cine-mask-wrapper"><span class="cine-mask-line cine-cta-l4">REMEMBERING.</span></div>
+                </h2>
+                <p class="final-cta-subtext cine-cta-sub">If you're building something meaningful,<br>I'd love to hear
+                    about it.</p>
+            </div>
+
+            <div class="final-cta-right cine-cta-form-trigger">
+                <form class="final-cta-form" id="contact-form" onsubmit="handleFormSubmit(event)">
+                    <div class="final-cta-input-group">
+                        <label>YOUR NAME</label>
+                        <input type="text" name="name" id="form-name" required />
+                    </div>
+                    <div class="final-cta-input-group">
+                        <label>YOUR EMAIL</label>
+                        <input type="email" name="email" id="form-email" required />
+                    </div>
+                    <div class="final-cta-input-group">
+                        <label>TELL ME ABOUT YOUR PROJECT</label>
+                        <textarea rows="5" name="message" id="form-message" required></textarea>
+                    </div>
+                    <button type="submit" class="final-cta-submit" id="form-submit-btn">SUBMIT</button>
+                </form>
+
+                <div class="form-success flex-col items-center justify-center text-center py-16 gap-6" id="form-success"
+                    style="display: none;">
+                    <div class="checkmark">
+                        <span class="material-symbols-outlined text-white text-4xl">check</span>
+                    </div>
+                    <h3 class="font-headline font-bold text-3xl uppercase text-white mt-4">Message Sent</h3>
+                </div>
+
+                <div class="final-cta-info cine-cta-info">
+                    <div class="final-cta-info-block">
+                        <span class="final-cta-info-label">CONTACT</span>
+                        <a href="mailto:vsdev.design@gmail.com" class="final-cta-info-value">vsdev.design@gmail.com</a>
+                    </div>
+                    <div class="final-cta-info-block">
+                        <span class="final-cta-info-label">LOCATION</span>
+                        <span class="final-cta-info-value">London, UK</span>
+                    </div>
+                    <div class="final-cta-info-block">
+                        <span class="final-cta-info-label">LINKS</span>
+                        <a href="https://www.linkedin.com/in/vishnu-sreedev/" target="_blank"
+                            class="final-cta-info-value">LinkedIn</a>
+                    </div>
+                    <p class="final-cta-availability">Vdeology works with a limited number of projects each quarter.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== FULLSCREEN PROJECT CHAPTER OVERLAY ===== -->
+    <div class="project-overlay" id="project-overlay">
+        <!-- Hidden bg div (overlay is now fullscreen itself) -->
+        <div class="project-overlay-bg"></div>
+
+        <div class="project-panel" id="project-panel">
+
+            <!-- Minimal close button — fixed top right -->
+            <button class="project-panel-close" id="project-panel-close" onclick="closeProjectPanel()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+
+            <!-- Hero Video/Media Area -->
+            <div class="project-panel-media-hero">
+                <iframe id="project-panel-video-hero" class="project-panel-video" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%; height:100%; position:absolute; top:0; left:0; border:none;"></iframe>
+                <!-- Image-only hero (e.g. KATANA) -->
+                <img id="project-panel-img-hero" class="project-panel-hero-img" src="" alt="" style="display:none;" />
+                <!-- Play overlay -->
+                <div class="video-play-overlay" id="video-play-overlay" onclick="playHeroVideo()" style="display:none;">
+                    <div class="video-play-btn">
+                        <span class="material-symbols-outlined">play_arrow</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Body: luxury editorial layout -->
+            <div class="project-panel-body">
+
+                <!-- Editorial Brand Bar -->
+                <div class="project-panel-brand-bar">
+                    <div class="brand-bar-left">
+                        <span id="project-panel-brand-name">BRAND</span>
+                    </div>
+                    <div class="brand-bar-right">
+                        <span class="nav-link-item" onclick="closeProjectPanel()">BACK TO ALL</span>
+                        <span class="nav-link-separator">/</span>
+                        <span class="nav-link-item" onclick="loadNextProject()">NEXT PROJECT</span>
+                    </div>
+                </div>
+
+                <!-- Massive Typography Title -->
+                <div class="project-panel-huge-title-wrap">
+                    <h1 class="project-panel-huge-title" id="project-panel-huge-title">PROJECT TITLE</h1>
+                </div>
+
+                <div class="project-panel-meta" id="project-panel-meta"></div>
+
+                <!-- Case Study Content -->
+                <div class="project-panel-sections" id="project-panel-sections">
+
+                    <!-- Overview -->
+                    <div class="project-panel-section" id="section-brief">
+                        <span class="project-panel-section-label">Overview</span>
+                        <!-- Optional Profile Image -->
+                        <div class="project-panel-profile" id="project-panel-profile" style="display:none;">
+                            <img id="project-panel-profile-img" src="" alt="" />
+                        </div>
+                        <p class="project-panel-desc overview" id="project-panel-brief"></p>
+                    </div>
+
+                    <!-- Challenge -->
+                    <div class="project-panel-section" id="section-challenge">
+                        <span class="project-panel-section-label">Challenge</span>
+                        <p class="project-panel-desc" id="project-panel-challenge"></p>
+                    </div>
+
+                    <!-- Approach -->
+                    <div class="project-panel-section" id="section-solution">
+                        <span class="project-panel-section-label">Approach</span>
+                        <p class="project-panel-desc" id="project-panel-solution"></p>
+                    </div>
+
+                    <!-- Outcome -->
+                    <div class="project-panel-section" id="section-outcome">
+                        <span class="project-panel-section-label">Outcome</span>
+                        <p class="project-panel-desc" id="project-panel-outcome"></p>
+                    </div>
+
+                    <!-- Gallery / Deliverable Images -->
+                    <div class="project-panel-section" id="section-deliverables" style="display:none;">
+                        <span class="project-panel-section-label">Gallery</span>
+                        <p class="project-panel-desc" id="project-panel-deliverables"></p>
+                        <div class="deliverable-images-grid" id="project-panel-deliverable-images"></div>
+                    </div>
+
+                </div>
+
+                <!-- Disciplines -->
+                <div class="project-panel-scope">
+                    <h4>Disciplines</h4>
+                    <ul id="project-panel-scope"></ul>
+                </div>
+
+            </div><!-- /.project-panel-body -->
+        </div><!-- /.project-panel -->
+    </div><!-- /.project-overlay -->
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MINIMAL FOOTER
+    ═══════════════════════════════════════════════════════════ -->
+    <footer class="minimal-footer">
+        <div class="minimal-footer-content reveal-on-scroll">
+            <span>VDEOLOGY</span>
+            <span class="minimal-footer-divider">/</span>
+            <span>London, UK</span>
+            <span class="minimal-footer-divider">/</span>
+            <a href="mailto:vsdev.design@gmail.com">vsdev.design@gmail.com</a>
+            <span class="minimal-footer-divider">/</span>
+            <a href="https://www.linkedin.com/in/vishnu-sreedev/" target="_blank">LinkedIn</a>
+            <span class="minimal-footer-divider">/</span>
+            <span>© 2026</span>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
