@@ -1,3 +1,31 @@
+// ===== RESPONSIVE MEDIA SWITCHING =====
+(function() {
+    function setResponsiveVideos() {
+        const isMobile = window.innerWidth < 768;
+        const iframes = document.querySelectorAll('.responsive-iframe');
+        
+        iframes.forEach(iframe => {
+            const desktopSrc = iframe.getAttribute('data-desktop-src');
+            const mobileSrc = iframe.getAttribute('data-mobile-src');
+            const targetSrc = isMobile ? mobileSrc : desktopSrc;
+            
+            // Only update src if it changed, to prevent visible reloads during normal resizing
+            if (iframe.src !== targetSrc) {
+                iframe.src = targetSrc;
+            }
+        });
+    }
+
+    // Run immediately before DOM finishes rendering
+    setResponsiveVideos();
+    
+    // Update on resize (debounced)
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(setResponsiveVideos, 250);
+    });
+})();
 
 // ===== SHARED CONSTANTS =====
 const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
@@ -1211,15 +1239,14 @@ initMagneticBtns();
     }, { passive: true });
 })();
 
-// ===== ETHOS CINEMATIC INTERLUDE — Scroll Reveal =====
+// ===== ETHOS CINEMATIC INTERLUDE — Scroll Reveal + Video Playback =====
 (function () {
     const section = document.getElementById('ethos');
     if (!section) return;
 
     // Headline lines: staggered mask wipe
     const lines = section.querySelectorAll('.ethos-mask-line');
-    const labelEl = section.querySelector('.ethos-label');
-    const bodyEl  = section.querySelector('.ethos-body');
+    const videoCol = section.querySelector('.ethos-video-col');
 
     const headlineObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -1227,15 +1254,218 @@ initMagneticBtns();
             lines.forEach((line, i) => {
                 setTimeout(() => line.classList.add('is-revealed'), i * 160);
             });
-            // Ethos text staggered after headline
-            setTimeout(() => labelEl && labelEl.classList.add('is-revealed'), 400);
-            setTimeout(() => bodyEl  && bodyEl.classList.add('is-revealed'),  600);
+            // Founder video fades in shortly after headline begins
+            setTimeout(() => videoCol && videoCol.classList.add('is-revealed'), 500);
             headlineObserver.disconnect();
         });
     }, { threshold: 0.25 });
 
     const col = section.querySelector('.ethos-headline-col');
     if (col) headlineObserver.observe(col);
+
+    // ── Scroll-triggered video playback with sound ──
+    const video = document.getElementById('ethos-founder-video-el');
+    const soundOverlay = document.getElementById('ethos-sound-overlay');
+    const pauseIndicator = document.getElementById('ethos-pause-indicator');
+    const playIndicator = document.getElementById('ethos-play-indicator');
+    if (!video) return;
+
+    // Player controls elements
+    const vpControls    = document.getElementById('vp-controls');
+    const vpPlayBtn     = document.getElementById('vp-play-btn');
+    const vpIconPlay    = document.getElementById('vp-icon-play');
+    const vpIconPause   = document.getElementById('vp-icon-pause');
+    const vpTimeCurrent = document.getElementById('vp-time-current');
+    const vpTimeDuration= document.getElementById('vp-time-duration');
+    const vpSeek        = document.getElementById('vp-seek');
+    const vpSeekProgress= document.getElementById('vp-seek-progress');
+    const vpSeekBuffered= document.getElementById('vp-seek-buffered');
+    const vpSeekThumb   = document.getElementById('vp-seek-thumb');
+    const vpMuteBtn     = document.getElementById('vp-mute-btn');
+    const vpIconVol     = document.getElementById('vp-icon-vol');
+    const vpIconMuted   = document.getElementById('vp-icon-muted');
+
+    let hasStarted = false;
+    let soundUnlocked = false;
+    let isDragging = false;
+
+    // ── Helpers ──
+    function flashIndicator(el) {
+        el.classList.add('is-visible');
+        setTimeout(() => el.classList.remove('is-visible'), 400);
+    }
+
+    function formatTime(seconds) {
+        if (isNaN(seconds)) return '0:00';
+        const m = Math.floor(seconds / 60);
+        const s = Math.floor(seconds % 60);
+        return m + ':' + (s < 10 ? '0' : '') + s;
+    }
+
+    function syncPlayPauseIcon() {
+        if (!vpIconPlay || !vpIconPause) return;
+        if (video.paused) {
+            vpIconPlay.style.display = '';
+            vpIconPause.style.display = 'none';
+        } else {
+            vpIconPlay.style.display = 'none';
+            vpIconPause.style.display = '';
+        }
+    }
+
+    function syncMuteIcon() {
+        if (!vpIconVol || !vpIconMuted) return;
+        if (video.muted) {
+            vpIconVol.style.display = 'none';
+            vpIconMuted.style.display = '';
+        } else {
+            vpIconVol.style.display = '';
+            vpIconMuted.style.display = 'none';
+        }
+    }
+
+    function updateProgress() {
+        if (!video.duration || isDragging) return;
+        const pct = (video.currentTime / video.duration) * 100;
+        if (vpSeekProgress) vpSeekProgress.style.width = pct + '%';
+        if (vpSeekThumb) vpSeekThumb.style.left = pct + '%';
+        if (vpTimeCurrent) vpTimeCurrent.textContent = formatTime(video.currentTime);
+    }
+
+    function updateBuffered() {
+        if (!video.duration || !vpSeekBuffered) return;
+        if (video.buffered.length > 0) {
+            const buffEnd = video.buffered.end(video.buffered.length - 1);
+            vpSeekBuffered.style.width = (buffEnd / video.duration) * 100 + '%';
+        }
+    }
+
+    // ── Seek bar: click to seek ──
+    function seekToPosition(e) {
+        if (!video.duration) return;
+        const rect = vpSeek.getBoundingClientRect();
+        let pct = (e.clientX - rect.left) / rect.width;
+        pct = Math.max(0, Math.min(1, pct));
+        video.currentTime = pct * video.duration;
+        if (vpSeekProgress) vpSeekProgress.style.width = (pct * 100) + '%';
+        if (vpSeekThumb) vpSeekThumb.style.left = (pct * 100) + '%';
+        if (vpTimeCurrent) vpTimeCurrent.textContent = formatTime(video.currentTime);
+    }
+
+    if (vpSeek) {
+        vpSeek.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            vpSeek.classList.add('is-dragging');
+            seekToPosition(e);
+            e.preventDefault();
+        });
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            seekToPosition(e);
+        });
+        document.addEventListener('mouseup', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            vpSeek.classList.remove('is-dragging');
+        });
+        // Touch support
+        vpSeek.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            vpSeek.classList.add('is-dragging');
+            seekToPosition(e.touches[0]);
+            e.preventDefault();
+        }, { passive: false });
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            seekToPosition(e.touches[0]);
+        }, { passive: true });
+        document.addEventListener('touchend', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            vpSeek.classList.remove('is-dragging');
+        });
+    }
+
+    // ── Video events → update UI ──
+    if (video.tagName === 'VIDEO') {
+        video.addEventListener('timeupdate', updateProgress);
+        video.addEventListener('progress', updateBuffered);
+        video.addEventListener('loadedmetadata', () => {
+            if (vpTimeDuration) vpTimeDuration.textContent = formatTime(video.duration);
+        });
+        video.addEventListener('play', syncPlayPauseIcon);
+        video.addEventListener('pause', syncPlayPauseIcon);
+    }
+
+    // ── Play/Pause button ──
+    if (vpPlayBtn) {
+        vpPlayBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        });
+    }
+
+    // ── Mute toggle button ──
+    if (vpMuteBtn) {
+        vpMuteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            video.muted = !video.muted;
+            syncMuteIcon();
+        });
+    }
+
+    // ── Scroll into view → start playing ──
+    const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !hasStarted) {
+                hasStarted = true;
+                if (video.tagName === 'VIDEO') {
+                    video.muted = true;
+                    syncMuteIcon();
+                    video.play().then(() => {
+                        syncPlayPauseIcon();
+                        if (soundOverlay) soundOverlay.style.display = 'flex';
+                    }).catch(() => {});
+                } else if (video.tagName === 'IFRAME') {
+                    video.src = video.getAttribute('data-src');
+                    // Hide custom UI as iframe has its own controls
+                    if (vpControls) vpControls.style.display = 'none';
+                    if (soundOverlay) soundOverlay.style.display = 'none';
+                }
+            }
+        });
+    }, { threshold: 0.3 });
+
+    videoObserver.observe(video);
+
+    // ── Sound overlay click → unmute ──
+    if (soundOverlay) {
+        soundOverlay.addEventListener('click', (e) => {
+            e.stopPropagation();
+            video.muted = false;
+            soundUnlocked = true;
+            soundOverlay.classList.add('is-hidden');
+            syncMuteIcon();
+            if (video.paused) video.play();
+        });
+    }
+
+    // ── Click video → toggle pause/play ──
+    video.addEventListener('click', () => {
+        if (video.tagName !== 'VIDEO') return;
+        if (!soundUnlocked) return;
+        if (video.paused) {
+            video.play();
+            if (playIndicator) flashIndicator(playIndicator);
+        } else {
+            video.pause();
+            if (pauseIndicator) flashIndicator(pauseIndicator);
+        }
+    });
 })();
 
 // ===== ATMOSPHERIC PANEL PARALLAX (visual-only, does NOT touch card stacking) =====
