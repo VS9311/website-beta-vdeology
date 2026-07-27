@@ -1,0 +1,457 @@
+/* ═══════════════════════════════════════════════════════════
+   BEGIN PAGE — "Before we begin..."
+   Page-specific styles. Scoped under .begin-page
+   ═══════════════════════════════════════════════════════════ */
+
+/* ===== PAGE SCOPE ===== */
+.begin-page {
+    background-color: #060608;
+    min-height: 100vh;
+}
+
+/* ===== GENTLE REVEAL ANIMATION ===== */
+.begin-reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1),
+                transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.begin-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger children */
+.begin-reveal-delay-1 { transition-delay: 0.15s; }
+.begin-reveal-delay-2 { transition-delay: 0.3s; }
+.begin-reveal-delay-3 { transition-delay: 0.45s; }
+.begin-reveal-delay-4 { transition-delay: 0.6s; }
+.begin-reveal-delay-5 { transition-delay: 0.75s; }
+.begin-reveal-delay-6 { transition-delay: 0.9s; }
+
+/* ===== SECTION SPACING ===== */
+.begin-section {
+    padding: 0 clamp(24px, 6vw, 120px);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ===== CHAPTER MARKER ===== */
+.begin-chapter-marker {
+    font-family: 'General Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.3);
+    margin: 0 0 32px 0;
+}
+
+/* ===== TITLE AREA ===== */
+.begin-title-area {
+    padding-top: clamp(180px, 25vh, 320px);
+    padding-bottom: clamp(60px, 10vh, 120px);
+}
+
+.begin-page-title {
+    font-family: 'General Sans', sans-serif;
+    font-weight: 700;
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0;
+}
+
+/* ===== INTRODUCTION ===== */
+.begin-intro-area {
+    padding-bottom: clamp(100px, 14vh, 180px);
+}
+
+.begin-intro-text {
+    font-family: 'General Sans', sans-serif;
+    font-weight: 400;
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 680px;
+    letter-spacing: 0;
+}
+
+.begin-intro-text p {
+    margin: 0 0 1.4em 0;
+}
+
+.begin-intro-text p:last-child {
+    margin-bottom: 0;
+}
+
+/* ===== VIDEO PLACEHOLDER ===== */
+.begin-video-area {
+    padding-bottom: clamp(120px, 16vh, 220px);
+}
+
+.begin-placeholder {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #0a0a0c;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.begin-placeholder-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.12);
+    user-select: none;
+}
+
+/* Subtle inner glow on placeholder */
+.begin-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(255, 255, 255, 0.012) 0%,
+        transparent 65%
+    );
+    pointer-events: none;
+}
+
+/* ===== WHAT HAPPENS NEXT ===== */
+.begin-sequence-area {
+    padding-bottom: clamp(120px, 16vh, 220px);
+}
+
+.begin-sequence-title {
+    font-family: 'General Sans', sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: #FFFFFF;
+    margin: 0 0 clamp(60px, 10vh, 120px) 0;
+    line-height: 1;
+}
+
+.begin-sequence {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+}
+
+.begin-sequence-step {
+    font-family: 'General Sans', sans-serif;
+    font-weight: 500;
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: -0.01em;
+}
+
+.begin-sequence-arrow {
+    font-family: 'General Sans', sans-serif;
+    font-weight: 400;
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.15);
+    padding: 60px 0;
+    user-select: none;
+    line-height: 1;
+}
+
+.begin-sequence-final {
+    font-family: 'General Sans', sans-serif;
+    font-weight: 500;
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: -0.01em;
+}
+
+.begin-sequence-final-emphasis {
+    display: block;
+    margin-top: 16px;
+    font-family: 'General Sans', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+    color: #FFFFFF;
+    letter-spacing: -0.02em;
+}
+
+/* ===== EDITORIAL NOTE (Pull Quote) ===== */
+.begin-note-area {
+    padding-bottom: clamp(120px, 16vh, 220px);
+}
+
+.begin-editorial-note {
+    font-family: 'General Sans', sans-serif;
+    font-weight: 400;
+    font-size: clamp(1rem, 1.2vw, 1.15rem);
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.4);
+    max-width: 500px;
+    letter-spacing: 0;
+    padding-left: 24px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.begin-editorial-note p {
+    margin: 0 0 0.9em 0;
+}
+
+.begin-editorial-note p:last-child {
+    margin-bottom: 0;
+}
+
+/* ===== FORM SECTION (with sidebar) ===== */
+.begin-form-area {
+    padding-bottom: clamp(100px, 15vh, 160px);
+}
+
+.begin-form-title {
+    font-family: 'General Sans', sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: #FFFFFF;
+    margin: 0 0 clamp(50px, 8vh, 100px) 0;
+    line-height: 1;
+}
+
+.begin-form-layout {
+    width: 100%;
+}
+
+/* Live Tally Embed */
+.begin-tally-container {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.begin-tally-container iframe {
+    width: 100%;
+    border: none;
+    margin: 0;
+    padding: 0;
+    min-height: 800px; /* Provides ample space to prevent scrollbars */
+}
+
+/* ===== EDITORIAL FAQ ===== */
+.begin-faq-area {
+    padding-bottom: clamp(60px, 8vh, 100px);
+}
+
+.begin-accordion {
+    max-width: 900px; /* Keep the measure readable */
+    width: 100%;
+}
+
+.begin-accordion-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.begin-accordion-item:last-child {
+    border-bottom: none;
+}
+
+.begin-accordion-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: clamp(24px, 4vw, 32px) 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.85);
+    text-align: left;
+    transition: color 0.3s ease;
+}
+
+.begin-accordion-trigger:hover {
+    color: #FFFFFF;
+}
+
+.begin-accordion-title {
+    font-family: 'General Sans', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
+    letter-spacing: -0.01em;
+    padding-right: 24px;
+}
+
+.begin-accordion-icon {
+    font-family: 'General Sans', sans-serif;
+    font-weight: 400;
+    font-size: 1.8rem;
+    color: rgba(255, 255, 255, 0.4);
+    transition: transform 0.3s ease;
+}
+
+.begin-accordion-content {
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+}
+
+.begin-accordion-content-inner {
+    padding-bottom: clamp(24px, 4vw, 32px);
+    font-family: 'General Sans', sans-serif;
+    font-weight: 400;
+    font-size: clamp(1.1rem, 1.3vw, 1.2rem);
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+    max-width: 700px;
+}
+
+.begin-accordion-content-inner p {
+    margin-bottom: 1em;
+}
+
+.begin-accordion-content-inner p:last-child {
+    margin-bottom: 0;
+}
+
+.begin-faq-answer {
+    font-family: 'General Sans', sans-serif;
+    font-weight: 400;
+    font-size: clamp(1rem, 1.2vw, 1.15rem);
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 0;
+}
+
+.begin-faq-answer p {
+    margin: 0;
+}
+
+/* ===== CLOSING SECTION ===== */
+.begin-closing-area {
+    padding-top: clamp(60px, 8vh, 120px);
+    padding-bottom: clamp(140px, 18vh, 240px);
+}
+
+.begin-closing-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.5);
+    max-width: 540px;
+    margin-bottom: 16px;
+    letter-spacing: 0.01em;
+}
+
+.begin-closing-note {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: clamp(0.88rem, 1vw, 1rem);
+    line-height: 1.85;
+    color: rgba(255, 255, 255, 0.3);
+    max-width: 540px;
+    margin-bottom: clamp(48px, 6vh, 72px);
+}
+
+/* ===== CTA BUTTON — Editorial Typography-First ===== */
+.begin-cta-btn {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    border: none;
+    padding: 0;
+    background: transparent;
+    text-decoration: none;
+    cursor: none;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.begin-cta-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #FFFFFF;
+    transform: scaleX(1);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.begin-cta-btn:hover {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.begin-cta-btn:hover::after {
+    transform: scaleX(0);
+    transform-origin: right;
+}
+
+/* ===== DIVIDER LINE ===== */
+.begin-divider {
+    width: 40px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.06);
+    margin: clamp(60px, 8vh, 100px) 0;
+}
+
+/* ===== FOOTER (reused from homepage, minimal override) ===== */
+.begin-page .minimal-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .begin-title-area {
+        padding-top: 140px;
+    }
+
+    .begin-section {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .begin-form-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+    }
+
+    .begin-sidebar-title {
+        margin-bottom: 32px;
+    }
+
+    .begin-faq-item {
+        padding-bottom: 32px;
+        margin-bottom: 32px;
+    }
+
+    .begin-sequence-title,
+    .begin-form-title {
+        font-size: clamp(1.5rem, 6vw, 2.2rem);
+    }
+}
+
+/* ===== SECTION RULE (thin accent) ===== */
+.begin-section-rule {
+    width: 24px;
+    height: 2px;
+    background: #E8521A;
+    opacity: 0.35;
+    margin-bottom: 28px;
+}

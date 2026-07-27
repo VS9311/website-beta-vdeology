@@ -105,7 +105,7 @@
 
     <!-- ===== CINEMATIC BACKGROUND VIDEO ===== -->
     <div class="hero-video-wrapper" id="hero-video-wrapper">
-        <iframe class="hero-video" id="hero-video" src="https://player.mediadelivery.net/embed/680285/de094850-815e-4407-a6df-4fce2b2ac15e?autoplay=true&loop=true&muted=true&preload=true&responsive=true" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%; height:100%; position:absolute; top:0; left:0; border:none; pointer-events:none;"></iframe>
+        <iframe class="hero-video responsive-iframe" id="hero-video" data-desktop-src="https://player.mediadelivery.net/embed/680285/83afebf9-c614-436e-813d-704f8598199d?autoplay=true&loop=true&muted=true&preload=true&responsive=true" data-mobile-src="https://player.mediadelivery.net/embed/680285/6fb05547-5c46-4f03-89e2-14fa8053ed2c?autoplay=true&loop=true&muted=true&preload=true&responsive=true" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%; height:100%; position:absolute; top:0; left:0; border:none; pointer-events:none;"></iframe>
         <!-- Overlay 1: Cinematic gradient -->
         <div class="hero-video-overlay" id="hero-video-overlay"></div>
     </div>
@@ -135,7 +135,7 @@
                 href="#story">FOUNDER</a>
         </div>
         <!-- Right: Editorial CTA -->
-        <a href="#contact" class="nav-cta-editorial">Start a Project</a>
+        <a href="begin.html" class="nav-cta-editorial">Start a Project</a>
     </nav>
     <main>
         <!-- ===== HERO SECTION ===== -->
@@ -164,7 +164,7 @@
                 <div class="hero-buttons-wrap">
                     <div class="hero-buttons" id="hero-buttons">
                         <a href="#work" class="hero-btn">VIEW WORK</a>
-                        <a href="#contact" class="hero-btn">START A PROJECT</a>
+                        <a href="begin.html" class="hero-btn">START A PROJECT</a>
                     </div>
                 </div>
 
@@ -184,27 +184,89 @@
         ═══════════════════════════════════════════════════════════ -->
         <section class="ethos-interlude" id="ethos">
 
-            <!-- Inner Container -->
+            <!-- Inner Container — Two-column top row + centred film below -->
             <div class="ethos-inner">
 
-                <!-- LEFT: Staggered headline reveal -->
-                <div class="ethos-headline-col" id="ethos-headline-col">
-                    <h2 class="ethos-headline">
-                        <div class="ethos-mask-wrap"><span class="ethos-mask-line ethos-line-1">EVERY FRAME</span></div>
-                        <div class="ethos-mask-wrap"><span class="ethos-mask-line ethos-line-2">SHOULD MOVE</span></div>
-                        <div class="ethos-mask-wrap"><span class="ethos-mask-line ethos-line-3">SOMETHING.</span></div>
-                    </h2>
+                <!-- Top Row: Headline (left) | Studio Ethos copy (right) -->
+                <div class="ethos-top-row">
+
+                    <!-- LEFT: Staggered headline reveal -->
+                    <div class="ethos-headline-col" id="ethos-headline-col">
+                        <h2 class="ethos-headline">
+                            <div class="ethos-mask-wrap"><span class="ethos-mask-line ethos-line-1">EVERY FRAME</span></div>
+                            <div class="ethos-mask-wrap"><span class="ethos-mask-line ethos-line-2">SHOULD MOVE</span></div>
+                            <div class="ethos-mask-wrap"><span class="ethos-mask-line ethos-line-3">SOMETHING.</span></div>
+                        </h2>
+                    </div>
+
+                    <!-- RIGHT: Studio Ethos copy block -->
+                    <div class="ethos-copy-block" id="ethos-copy-block">
+                        <span class="ethos-copy-label">STUDIO ETHOS</span>
+                        <p class="ethos-copy-text">Founded by Vishnu Sreedev, Vdeology is a creative studio for leaders, visionaries, and organizations building the future.</p>
+                        <p class="ethos-copy-text">We believe great storytelling is more than content. It's how ideas gain momentum, movements inspire believers, and brands become unforgettable.</p>
+                    </div>
+
                 </div>
 
-                <!-- RIGHT: Studio Ethos text blocks -->
-                <div class="ethos-text-col">
-                    <div class="ethos-label ethos-stagger-1">STUDIO ETHOS</div>
-                    <p class="ethos-body ethos-stagger-2">
-                        Founded by Vishnu Sreedev, Vdeology is a creative studio for leaders, visionaries, and
-                        organizations building the future.<br><br>
-                        We believe great storytelling is more than content. It's how ideas gain momentum, movements
-                        inspire believers, and brands become unforgettable.
-                    </p>
+                <!-- Founder Film — large centred editorial media frame -->
+                <div class="ethos-video-col" id="ethos-video-col">
+                    <div class="ethos-founder-video" id="ethos-founder-video">
+                        <div class="ethos-video-frame" id="ethos-video-frame">
+                            <!-- Local MP4 video — scroll-triggered, unmuted, looping -->
+                            <iframe
+                                id="ethos-founder-video-el"
+                                data-src="https://player.mediadelivery.net/embed/680285/1ffffba2-06d9-4e92-9088-d9a47ee713be?autoplay=true&loop=false&muted=true&preload=true&responsive=true"
+                                style="width:100%; height:100%; position:absolute; top:0; left:0; border:none; pointer-events:auto;"
+                                allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
+                            ></iframe>
+                            <!-- Sound unlock overlay — shown if browser blocks unmuted autoplay -->
+                            <div class="ethos-sound-overlay" id="ethos-sound-overlay">
+                                <div class="ethos-sound-btn">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M11 5L6 9H2V15H6L11 19V5Z" fill="white"/>
+                                        <path d="M15.54 8.46C16.48 9.4 17 10.67 17 12C17 13.33 16.48 14.6 15.54 15.54" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                                        <path d="M19.07 4.93C20.94 6.8 22 9.34 22 12C22 14.66 20.94 17.2 19.07 19.07" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                                    </svg>
+                                    <span>Click for sound</span>
+                                </div>
+                            </div>
+                            <!-- Pause indicator — briefly flashes on click -->
+                            <div class="ethos-pause-indicator" id="ethos-pause-indicator">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="6" y="4" width="4" height="16" rx="1"/>
+                                    <rect x="14" y="4" width="4" height="16" rx="1"/>
+                                </svg>
+                            </div>
+                            <div class="ethos-play-indicator" id="ethos-play-indicator">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 5V19L19 12L8 5Z"/>
+                                </svg>
+                            </div>
+                            <!-- Custom player controls bar -->
+                            <div class="vp-controls" id="vp-controls">
+                                <!-- Play / Pause -->
+                                <button class="vp-play-btn" id="vp-play-btn" aria-label="Play or pause">
+                                    <svg class="vp-icon-play" id="vp-icon-play" width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M8 5V19L19 12L8 5Z"/></svg>
+                                    <svg class="vp-icon-pause" id="vp-icon-pause" width="16" height="16" viewBox="0 0 24 24" fill="white" style="display:none;"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+                                </button>
+                                <!-- Time current -->
+                                <span class="vp-time" id="vp-time-current">0:00</span>
+                                <!-- Seek bar -->
+                                <div class="vp-seek" id="vp-seek">
+                                    <div class="vp-seek-buffered" id="vp-seek-buffered"></div>
+                                    <div class="vp-seek-progress" id="vp-seek-progress"></div>
+                                    <div class="vp-seek-thumb" id="vp-seek-thumb"></div>
+                                </div>
+                                <!-- Time duration -->
+                                <span class="vp-time" id="vp-time-duration">0:00</span>
+                                <!-- Mute toggle -->
+                                <button class="vp-mute-btn" id="vp-mute-btn" aria-label="Toggle mute">
+                                    <svg class="vp-icon-vol" id="vp-icon-vol" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M11 5L6 9H2V15H6L11 19V5Z" fill="white"/><path d="M15.54 8.46C16.48 9.4 17 10.67 17 12C17 13.33 16.48 14.6 15.54 15.54" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+                                    <svg class="vp-icon-muted" id="vp-icon-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:none;"><path d="M11 5L6 9H2V15H6L11 19V5Z" fill="white"/><line x1="18" y1="9" x2="22" y2="15" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="22" y1="9" x2="18" y2="15" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -384,22 +446,19 @@
                 <!-- Fullscreen background videos — one per identity -->
                 <div class="masters-bg" id="masters-bg">
                     <div class="masters-bg-layer masters-bg-layer--active" data-masters-bg="0">
-                        <iframe src="https://player.mediadelivery.net/embed/680285/33e83dbe-ae93-4230-8da2-97e991d2a45c?autoplay=true&loop=true&muted=true&preload=true&responsive=true" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%; height:100%; position:absolute; top:0; left:0; border:none; pointer-events:none;"></iframe>
+                        <iframe class="responsive-iframe" data-desktop-src="https://player.mediadelivery.net/embed/680285/33e83dbe-ae93-4230-8da2-97e991d2a45c?autoplay=true&loop=true&muted=true&preload=true&responsive=true" data-mobile-src="https://player.mediadelivery.net/embed/680285/50b99ebc-74a0-4492-ae9e-ac1612118b2e?autoplay=true&loop=true&muted=true&preload=true&responsive=true" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%; height:100%; position:absolute; top:0; left:0; border:none; pointer-events:none;"></iframe>
                     </div>
                     <div class="masters-bg-layer" data-masters-bg="1">
-                        <iframe src="https://player.mediadelivery.net/embed/680285/e4aefa1b-121d-4ff0-a385-cac8e0e3ef6b?autoplay=true&loop=true&muted=true&preload=true&responsive=true" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%; height:100%; position:absolute; top:0; left:0; border:none; pointer-events:none;"></iframe>
+                        <iframe class="responsive-iframe" data-desktop-src="https://player.mediadelivery.net/embed/680285/90b66bbb-60ab-41b7-97eb-b2130cbcaedc?autoplay=true&loop=true&muted=true&preload=true&responsive=true" data-mobile-src="https://player.mediadelivery.net/embed/680285/847ecf00-0567-45b9-9a4d-b201f0abd2c3?autoplay=true&loop=true&muted=true&preload=true&responsive=true" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%; height:100%; position:absolute; top:0; left:0; border:none; pointer-events:none;"></iframe>
                     </div>
                     <div class="masters-bg-layer" data-masters-bg="2">
-                        <video autoplay loop muted playsinline
-                            poster="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1600&q=80&fit=crop">
-                            <source src="videos/the_coach_documentary.mp4" type="video/mp4">
-                        </video>
+                        <iframe class="responsive-iframe" data-desktop-src="https://player.mediadelivery.net/embed/680285/9acc73ae-56dd-41b2-a993-dbe3493038b8?autoplay=true&loop=true&muted=true&preload=true&responsive=true" data-mobile-src="https://player.mediadelivery.net/embed/680285/f7df01d0-6e85-44cd-b5c3-b7c17f3ce853?autoplay=true&loop=true&muted=true&preload=true&responsive=true" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%; height:100%; position:absolute; top:0; left:0; border:none; pointer-events:none;"></iframe>
                     </div>
                     <div class="masters-bg-layer" data-masters-bg="3">
-                        <iframe src="https://player.mediadelivery.net/embed/680285/72f7842c-7db0-46e9-bf43-ae1631b5e9f5?autoplay=true&loop=true&muted=true&preload=true&responsive=true" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%; height:100%; position:absolute; top:0; left:0; border:none; pointer-events:none;"></iframe>
+                        <iframe class="responsive-iframe" data-desktop-src="https://player.mediadelivery.net/embed/680285/aceec247-2e55-4f08-8d48-8e2712e2722a?autoplay=true&loop=true&muted=true&preload=true&responsive=true" data-mobile-src="https://player.mediadelivery.net/embed/680285/66a65cde-ce6a-425e-a994-67727b972e67?autoplay=true&loop=true&muted=true&preload=true&responsive=true" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%; height:100%; position:absolute; top:0; left:0; border:none; pointer-events:none;"></iframe>
                     </div>
                     <div class="masters-bg-layer" data-masters-bg="4">
-                        <iframe src="https://player.mediadelivery.net/embed/680285/2a1f8b7e-54d6-48cf-8af6-8c0d2ac6ceb8?autoplay=true&loop=true&muted=true&preload=true&responsive=true" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%; height:100%; position:absolute; top:0; left:0; border:none; pointer-events:none;"></iframe>
+                        <iframe class="responsive-iframe" data-desktop-src="https://player.mediadelivery.net/embed/680285/b60b6e75-b718-4edc-b042-2542aaa00864?autoplay=true&loop=true&muted=true&preload=true&responsive=true" data-mobile-src="https://player.mediadelivery.net/embed/680285/3ae05a12-a327-404a-aabf-8177f6908ba9?autoplay=true&loop=true&muted=true&preload=true&responsive=true" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%; height:100%; position:absolute; top:0; left:0; border:none; pointer-events:none;"></iframe>
                     </div>
 
                     <!-- Cinematic overlay gradient -->
@@ -751,29 +810,7 @@
             </div>
 
             <div class="final-cta-right cine-cta-form-trigger">
-                <form class="final-cta-form" id="contact-form" onsubmit="handleFormSubmit(event)">
-                    <div class="final-cta-input-group">
-                        <label>YOUR NAME</label>
-                        <input type="text" name="name" id="form-name" required />
-                    </div>
-                    <div class="final-cta-input-group">
-                        <label>YOUR EMAIL</label>
-                        <input type="email" name="email" id="form-email" required />
-                    </div>
-                    <div class="final-cta-input-group">
-                        <label>TELL ME ABOUT YOUR PROJECT</label>
-                        <textarea rows="5" name="message" id="form-message" required></textarea>
-                    </div>
-                    <button type="submit" class="final-cta-submit" id="form-submit-btn">SUBMIT</button>
-                </form>
-
-                <div class="form-success flex-col items-center justify-center text-center py-16 gap-6" id="form-success"
-                    style="display: none;">
-                    <div class="checkmark">
-                        <span class="material-symbols-outlined text-white text-4xl">check</span>
-                    </div>
-                    <h3 class="font-headline font-bold text-3xl uppercase text-white mt-4">Message Sent</h3>
-                </div>
+                <a href="begin.html" class="hero-btn" style="margin-bottom: 4rem;">START A PROJECT</a>
 
                 <div class="final-cta-info cine-cta-info">
                     <div class="final-cta-info-block">

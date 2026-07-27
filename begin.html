@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html class="dark scroll-smooth" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Before we begin... | VDEOLOGY Studios</title>
+    <meta name="description"
+        content="Start a conversation with Vdeology Studios. Tell us about your project and let's explore what we can build together." />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&amp;family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Epilogue:wght@100..900&amp;family=Manrope:wght@200..800&amp;family=IBM+Plex+Mono:wght@300;400;500;600&amp;family=Inter:wght@400;500&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Fontshare for General Sans -->
+    <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#353437",
+                        "surface-container-highest": "#353437",
+                        "on-background": "#e5e1e5",
+                        "surface-bright": "#39393c",
+                        "on-secondary-fixed-variant": "#594320",
+                        "secondary": "#C8A97E",
+                        "on-tertiary-fixed": "#001d35",
+                        "surface-container-high": "#2a2a2c",
+                        "tertiary-fixed": "#d0e4ff",
+                        "primary-container": "#f95e26",
+                        "error-container": "#93000a",
+                        "tertiary-container": "#2696eb",
+                        "surface-container-lowest": "#0e0e10",
+                        "tertiary-fixed-dim": "#9ccaff",
+                        "secondary-container": "#594320",
+                        "on-secondary-container": "#d0b085",
+                        "tertiary": "#9ccaff",
+                        "inverse-on-surface": "#313033",
+                        "surface-tint": "#ffb59e",
+                        "primary": "#E8521A",
+                        "on-secondary": "#402d0c",
+                        "on-tertiary-fixed-variant": "#00497a",
+                        "primary-fixed": "#ffdbd0",
+                        "on-primary-fixed-variant": "#842500",
+                        "outline": "#aa8a80",
+                        "surface-dim": "#131316",
+                        "on-tertiary": "#003256",
+                        "surface-container": "#201f22",
+                        "inverse-surface": "#e5e1e5",
+                        "primary-fixed-dim": "#ffb59e",
+                        "surface": "#060608",
+                        "on-tertiary-container": "#002b4c",
+                        "on-primary": "#FFFFFF",
+                        "on-error": "#690005",
+                        "on-surface": "#e5e1e5",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed": "#ffddb0",
+                        "inverse-primary": "#ad3300",
+                        "secondary-fixed-dim": "#e2c195",
+                        "on-primary-container": "#521400",
+                        "error": "#ffb4ab",
+                        "background": "#060608",
+                        "on-primary-fixed": "#390b00",
+                        "on-surface-variant": "#e3bfb4",
+                        "outline-variant": "#5a4139",
+                        "on-secondary-fixed": "#281800",
+                        "surface-container-low": "#1c1b1e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["General Sans", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["General Sans", "sans-serif"],
+                        "serif": ["General Sans", "sans-serif"],
+                        "general": ["General Sans", "sans-serif"],
+                        "inter": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+
+    <!-- Shared base styles -->
+    <link rel="stylesheet" href="css/main.css" />
+    <!-- Page-specific styles -->
+    <link rel="stylesheet" href="css/begin.css" />
+</head>
+
+<body class="begin-page selection:bg-primary selection:text-white">
+
+    <!-- ===== FILM GRAIN OVERLAY ===== -->
+    <svg class="film-grain" id="film-grain">
+        <filter id="noise-filter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noise-filter)" />
+    </svg>
+
+    <!-- ===== CUSTOM CURSOR ===== -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
+
+    <!-- ===== SCROLL PROGRESS BAR ===== -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav id="main-nav"
+        class="nav-global fixed top-0 w-full z-50 flex justify-between items-center px-12 py-6 bg-transparent">
+        <!-- Left: Brand (links back to homepage) -->
+        <a href="index.html"
+            class="font-general font-bold text-2xl tracking-tighter text-white uppercase hover:text-white/80 transition-colors duration-300">
+            VDEOLOGY
+        </a>
+        <!-- Center: Navigation Links -->
+        <div class="hidden md:flex gap-12 items-center">
+            <a class="nav-link font-inter text-[0.75rem] font-medium tracking-[0.1em] uppercase text-white hover:text-white/60 transition-colors duration-300"
+                href="index.html#work">WORK</a>
+            <a class="nav-link font-inter text-[0.75rem] font-medium tracking-[0.1em] uppercase text-white hover:text-white/60 transition-colors duration-300"
+                href="index.html#masters-section">EXPERTISE</a>
+            <a class="nav-link font-inter text-[0.75rem] font-medium tracking-[0.1em] uppercase text-white hover:text-white/60 transition-colors duration-300"
+                href="index.html#story">FOUNDER</a>
+        </div>
+        <!-- Right: intentionally empty — visitor is already beginning the conversation -->
+        <div class="hidden md:block" style="width: 120px;"></div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         PAGE CONTENT
+    ═══════════════════════════════════════════════════════════ -->
+    <main>
+
+        <!-- ───── TITLE ───── -->
+        <section class="begin-section begin-title-area">
+            <p class="begin-chapter-marker begin-reveal">Begin the Conversation</p>
+            <h1 class="begin-page-title begin-reveal begin-reveal-delay-1">Let's Start With Your Story</h1>
+        </section>
+
+        <!-- ───── INTRODUCTION ───── -->
+        <section class="begin-section begin-intro-area">
+            <div class="begin-intro-text begin-reveal begin-reveal-delay-1">
+                <p>I'd love to understand what you're building.</p>
+                <p>Every meaningful project begins with understanding your goals, your challenges, and the impact you're
+                    hoping to create.</p>
+            </div>
+        </section>
+
+        <!-- ───── WELCOME VIDEO ───── -->
+        <section class="begin-section begin-video-area">
+            <div class="begin-reveal begin-reveal-delay-1" style="width: 100%; aspect-ratio: 16/9; background: #0a0a0c; border: 1px solid rgba(255, 255, 255, 0.04); overflow: hidden; position: relative;">
+                <iframe id="onboarding-video" class="w-full h-full object-cover" 
+                    data-src="https://player.mediadelivery.net/embed/680285/c636e7de-d1cf-47e1-b806-da6d30afdfba?autoplay=true&loop=false&muted=true&preload=true&responsive=true" 
+                    style="border:none;" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen>
+                </iframe>
+                <!-- Unmute overlay — disappears after first click -->
+                <div id="video-unmute-overlay" style="
+                    position: absolute;
+                    bottom: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    background: rgba(0,0,0,0.6);
+                    backdrop-filter: blur(8px);
+                    -webkit-backdrop-filter: blur(8px);
+                    border: 1px solid rgba(255,255,255,0.15);
+                    padding: 10px 20px;
+                    cursor: pointer;
+                    transition: opacity 0.4s ease;
+                    z-index: 10;
+                ">
+                    <span style="font-size: 1.1rem;">🔇</span>
+                    <span style="font-family: 'General Sans', sans-serif; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.85);">Click to unmute</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ───── WHAT HAPPENS NEXT ───── -->
+        <section class="begin-section begin-sequence-area">
+            <div class="begin-section-rule begin-reveal"></div>
+            <h2 class="begin-sequence-title begin-reveal">What Happens Next</h2>
+
+            <div class="begin-sequence">
+                <div class="begin-reveal">
+                </div>
+
+                <div class="begin-reveal begin-reveal-delay-1">
+                    <span class="begin-sequence-arrow">↓</span>
+                </div>
+
+                <div class="begin-reveal begin-reveal-delay-1">
+                    <span class="begin-sequence-step">We'll review it personally.</span>
+                </div>
+
+                <div class="begin-reveal begin-reveal-delay-2">
+                    <span class="begin-sequence-arrow">↓</span>
+                </div>
+
+                <div class="begin-reveal begin-reveal-delay-2">
+                    <span class="begin-sequence-step">We'll arrange a conversation.</span>
+                </div>
+
+                <div class="begin-reveal begin-reveal-delay-3">
+                    <span class="begin-sequence-arrow">↓</span>
+                </div>
+
+                <div class="begin-reveal begin-reveal-delay-3">
+                    <span class="begin-sequence-step">We'll recommend the best approach.</span>
+                </div>
+
+                <div class="begin-reveal begin-reveal-delay-4">
+                    <span class="begin-sequence-arrow">↓</span>
+                </div>
+
+                <div class="begin-reveal begin-reveal-delay-4">
+                    <div class="begin-sequence-final">
+                        If we're a good fit...
+                        <span class="begin-sequence-final-emphasis">We'll build something together.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ───── EDITORIAL NOTE ───── -->
+        <section class="begin-section begin-note-area">
+            <div class="begin-editorial-note begin-reveal">
+                <p>We don't believe in one-size-fits-all packages.</p>
+                <p>Every recommendation begins with understanding your goals.</p>
+            </div>
+        </section>
+
+        <!-- ───── TELL US ABOUT YOUR PROJECT + SIDEBAR ───── -->
+        <section class="begin-section begin-form-area">
+            <div class="begin-section-rule begin-reveal"></div>
+            <h2 class="begin-form-title begin-reveal">Tell us about your project</h2>
+
+            <div class="begin-form-layout">
+                <!-- Live Tally Embed -->
+                <div class="begin-tally-container begin-reveal begin-reveal-delay-1">
+                    <iframe
+                        data-tally-src="https://tally.so/embed/LZN5Ev?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+                        loading="lazy" width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0"
+                        title="Tell us about your project">
+                    </iframe>
+
+                    <script async src="https://tally.so/widgets/embed.js"></script>
+                </div>
+            </div>
+        </section>
+
+        <!-- ───── EDITORIAL FAQ ───── -->
+        <section class="begin-section begin-faq-area">
+            <div class="begin-section-rule begin-reveal"></div>
+            <h2 class="begin-form-title begin-reveal">Before We Begin</h2>
+
+            <div class="begin-accordion begin-reveal begin-reveal-delay-1">
+                <!-- Question 1 (Expanded) -->
+                <div class="begin-accordion-item expanded">
+                    <button class="begin-accordion-trigger" aria-expanded="true">
+                        <span class="begin-accordion-title">Do I need to know exactly what I want before reaching
+                            out?</span>
+                        <span class="begin-accordion-icon">–</span>
+                    </button>
+                    <div class="begin-accordion-content" style="max-height: 800px; opacity: 1;">
+                        <div class="begin-accordion-content-inner">
+                            <p>Not at all.</p>
+                            <p>Many of our best projects begin with an idea rather than a fully formed brief. The
+                                discovery process is designed to help clarify your goals before we recommend an
+                                approach.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="begin-accordion-item">
+                    <button class="begin-accordion-trigger" aria-expanded="false">
+                        <span class="begin-accordion-title">What kinds of clients do you work with?</span>
+                        <span class="begin-accordion-icon">+</span>
+                    </button>
+                    <div class="begin-accordion-content" style="max-height: 0; opacity: 0;">
+                        <div class="begin-accordion-content-inner">
+                            <p>We primarily work with founders, experts, educators, and organisations that have valuable
+                                ideas to share.</p>
+                            <p>Whether you're building a personal brand, growing a business, or telling your company's
+                                story, we focus on creating media that communicates your expertise clearly and
+                                memorably.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="begin-accordion-item">
+                    <button class="begin-accordion-trigger" aria-expanded="false">
+                        <span class="begin-accordion-title">Do you only create videos?</span>
+                        <span class="begin-accordion-icon">+</span>
+                    </button>
+                    <div class="begin-accordion-content" style="max-height: 0; opacity: 0;">
+                        <div class="begin-accordion-content-inner">
+                            <p>Video is where most projects begin, but our work is really about helping people
+                                communicate ideas.</p>
+                            <p>That might include long-form content, short-form distribution, founder stories,
+                                documentary-style films, or strategic content designed to support a broader body of
+                                work.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="begin-accordion-item">
+                    <button class="begin-accordion-trigger" aria-expanded="false">
+                        <span class="begin-accordion-title">How much does a project usually cost?</span>
+                        <span class="begin-accordion-icon">+</span>
+                    </button>
+                    <div class="begin-accordion-content" style="max-height: 0; opacity: 0;">
+                        <div class="begin-accordion-content-inner">
+                            <p>Every project is different, so we don't believe in one-size-fits-all pricing.</p>
+                            <p>After learning more about your goals, we'll recommend an approach that matches the scope
+                                of your project and provide transparent pricing before any work begins.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="begin-accordion-item">
+                    <button class="begin-accordion-trigger" aria-expanded="false">
+                        <span class="begin-accordion-title">What happens after I submit the discovery form?</span>
+                        <span class="begin-accordion-icon">+</span>
+                    </button>
+                    <div class="begin-accordion-content" style="max-height: 0; opacity: 0;">
+                        <div class="begin-accordion-content-inner">
+                            <p>We'll review your submission personally and usually get back to you within one business
+                                day.</p>
+                            <p>If it looks like we're a good fit, we'll arrange a discovery conversation to better
+                                understand your goals before recommending the next steps.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 6 -->
+                <div class="begin-accordion-item">
+                    <button class="begin-accordion-trigger" aria-expanded="false">
+                        <span class="begin-accordion-title">Where are you based? Can we work remotely?</span>
+                        <span class="begin-accordion-icon">+</span>
+                    </button>
+                    <div class="begin-accordion-content" style="max-height: 0; opacity: 0;">
+                        <div class="begin-accordion-content-inner">
+                            <p>Vdeology is based in the UK and works with clients internationally.</p>
+                            <p>Most projects can be managed remotely through video calls, collaborative tools, and
+                                structured feedback throughout the production process.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ───── CLOSING ───── -->
+        <section class="begin-section begin-closing-area">
+            <div class="begin-divider begin-reveal"></div>
+            <p class="begin-closing-text begin-reveal">Every enquiry is read personally.</p>
+            <p class="begin-closing-note begin-reveal begin-reveal-delay-1">If it feels like the right fit, you'll hear
+                from me within one business day.</p>
+        </section>
+
+    </main>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MINIMAL FOOTER
+    ═══════════════════════════════════════════════════════════ -->
+    <footer class="minimal-footer">
+        <div
+            class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 py-8 text-[0.7rem] tracking-[0.08em] uppercase text-white/30 font-inter begin-reveal">
+            <span>VDEOLOGY</span>
+            <span class="text-white/10">/</span>
+            <span>London, UK</span>
+            <span class="text-white/10">/</span>
+            <a href="mailto:vsdev.design@gmail.com"
+                class="hover:text-white/60 transition-colors duration-300">vsdev.design@gmail.com</a>
+            <span class="text-white/10">/</span>
+            <a href="https://www.linkedin.com/in/vishnu-sreedev/" target="_blank"
+                class="hover:text-white/60 transition-colors duration-300">LinkedIn</a>
+            <span class="text-white/10">/</span>
+            <span>© 2026</span>
+        </div>
+    </footer>
+
+    <!-- Page-specific script -->
+    <script src="js/begin.js"></script>
+</body>
+
+</html>
