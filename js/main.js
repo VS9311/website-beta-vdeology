@@ -1664,3 +1664,14 @@ initMagneticBtns();
     }
 })();
 
+// ===== DEEP LINK: FOUNDER VIDEO =====
+window.addEventListener('load', () => {
+    if (window.location.hash === '#founder-video') {
+        const ethosVideoSection = document.getElementById('ethos-founder-video');
+        if (ethosVideoSection) {
+            setTimeout(() => {
+                ethosVideoSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        }
+    }
+});

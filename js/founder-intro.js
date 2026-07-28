@@ -53,7 +53,7 @@
     }
 
     // ── CLOSE ──
-    function close() {
+    function close(preventScrollReset = false) {
         if (!isOpen) return;
         isOpen = false;
 
@@ -72,9 +72,11 @@
         document.body.style.overflow = '';
 
         // Restore scroll position after CSS transition completes
-        setTimeout(() => {
-            window.scrollTo({ top: savedScrollY, behavior: 'instant' });
-        }, 750);
+        if (!preventScrollReset) {
+            setTimeout(() => {
+                window.scrollTo({ top: savedScrollY, behavior: 'instant' });
+            }, 750);
+        }
     }
 
     // ── WATCH INTRODUCTION (start video) ──
@@ -82,12 +84,15 @@
         if (videoStarted) return;
         videoStarted = true;
 
-        // Transition: card fades out, video fades in
-        overlay.classList.add('fi-video-active');
+        // Close the popup and scroll to the existing Founder Introduction section
+        close(true);
 
-        // Load the Bunny player (autoplay triggers after user gesture — click satisfies browser policy)
-        if (iframe) {
-            iframe.src = BUNNY_SRC;
+        
+        const ethosVideoSection = document.getElementById('ethos-founder-video');
+        if (ethosVideoSection) {
+            setTimeout(() => {
+                ethosVideoSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
         }
     }
 
