@@ -1,0 +1,305 @@
+/* ═══════════════════════════════════════════════════════════
+   FOUNDER INTRODUCTION MODAL — Cinematic Editorial Component
+   Non-destructive addition. Zero impact on existing styles.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ===== OVERLAY BACKDROP ===== */
+.founder-intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9997;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                visibility 0s linear 0.7s;
+}
+.founder-intro-overlay.fi-visible {
+    pointer-events: auto;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                visibility 0s linear 0s;
+}
+
+/* ===== BACKDROP LAYER ===== */
+.fi-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.82);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* ===== CLOSE BUTTON ===== */
+.fi-close {
+    position: absolute;
+    top: 28px;
+    right: 32px;
+    z-index: 10;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    font-family: 'Inter', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 200;
+    line-height: 1;
+    padding: 8px;
+    cursor: none;
+    transition: color 0.3s ease, opacity 0.3s ease;
+}
+.fi-close:hover {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* ===== CONTENT WRAPPER ===== */
+.fi-content {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+}
+
+/* ===== EDITORIAL CARD ===== */
+.fi-card {
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+    padding: 80px 60px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.15s,
+                transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.15s;
+}
+.fi-visible .fi-card {
+    opacity: 1;
+    transform: translateY(0);
+}
+.fi-video-active .fi-card {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ===== CARD TYPOGRAPHY ===== */
+
+/* Small label */
+.fi-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.35);
+    margin-bottom: 32px;
+    display: block;
+}
+
+/* Large heading */
+.fi-heading {
+    font-family: 'General Sans', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin: 0 0 28px 0;
+    line-height: 1.1;
+}
+
+/* Supporting copy */
+.fi-copy {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.55);
+    max-width: 520px;
+    margin: 0 auto 56px auto;
+}
+
+/* ===== PRIMARY ACTION — WATCH INTRODUCTION ===== */
+.fi-play-btn {
+    display: inline-block;
+    background: none;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.85);
+    padding: 12px 4px 6px 4px;
+    position: relative;
+    cursor: none;
+    transition: color 0.3s ease,
+                transform 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                opacity 0.3s ease;
+}
+.fi-play-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.85);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.fi-play-btn:hover {
+    color: #ffffff;
+    transform: translateY(-3px);
+}
+.fi-play-btn:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* ===== SECONDARY ACTION — CONTINUE TO WEBSITE ===== */
+.fi-skip-btn {
+    display: block;
+    background: none;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.35);
+    margin: 28px auto 0 auto;
+    padding: 8px 4px;
+    cursor: none;
+    transition: color 0.3s ease;
+}
+.fi-skip-btn:hover {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+/* ===== VIDEO CONTAINER ===== */
+.fi-video-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 1100px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
+}
+.fi-video-active .fi-video-wrap {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* 16:9 responsive container */
+.fi-video-frame {
+    position: relative;
+    padding-top: 56.25%;
+    background: #000;
+}
+.fi-video-frame iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* ===== CONTINUE EXPLORING (Post-video) ===== */
+.fi-continue-wrap {
+    text-align: center;
+    margin-top: 32px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    pointer-events: none;
+}
+.fi-continue-wrap.fi-continue-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+.fi-continue-btn {
+    display: inline-block;
+    background: none;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 10px 4px 5px 4px;
+    position: relative;
+    cursor: none;
+    transition: color 0.3s ease,
+                transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.fi-continue-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.6);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.fi-continue-btn:hover {
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+.fi-continue-btn:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .fi-card {
+        padding: 48px 28px;
+    }
+    .fi-heading {
+        font-size: 2rem;
+    }
+    .fi-copy {
+        font-size: 0.92rem;
+        margin-bottom: 40px;
+    }
+    .fi-close {
+        top: 16px;
+        right: 20px;
+    }
+    .fi-video-wrap {
+        width: 95%;
+    }
+}
+
+@media (max-width: 480px) {
+    .fi-card {
+        padding: 36px 20px;
+    }
+    .fi-heading {
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+    }
+    .fi-label {
+        font-size: 0.65rem;
+        margin-bottom: 24px;
+    }
+    .fi-copy {
+        font-size: 0.85rem;
+        line-height: 1.6;
+    }
+}

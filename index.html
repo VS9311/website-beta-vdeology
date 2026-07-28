@@ -5,7 +5,15 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>VDEOLOGY Studios | Vishnu Sreedev</title>
+    <title>Vdeology | Founder-Led Creative Studio</title>
+    <meta name="description" content="Founder-led creative studio producing documentaries, branded storytelling, educational media, and authority-building content for modern brands and experts." />
+    <!-- Favicons -->
+    <link rel="icon" href="favicon.ico?v=2" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=2" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=2" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=2" />
+    <link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png?v=2" />
+    <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png?v=2" />
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
@@ -92,6 +100,7 @@
         }
     </script>
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/founder-intro.css" />
 </head>
 
 <body class="selection:bg-primary selection:text-white">
@@ -166,6 +175,9 @@
                         <a href="#work" class="hero-btn">VIEW WORK</a>
                         <a href="begin.html" class="hero-btn">START A PROJECT</a>
                     </div>
+                    <div class="hero-meet-founder-wrap">
+                        <a href="#" class="hero-meet-founder" onclick="openFounderIntro(); return false;">&#9654; Meet the Founder</a>
+                    </div>
                 </div>
 
             </div>
@@ -212,12 +224,14 @@
                 <div class="ethos-video-col" id="ethos-video-col">
                     <div class="ethos-founder-video" id="ethos-founder-video">
                         <div class="ethos-video-frame" id="ethos-video-frame">
-                            <!-- Local MP4 video — scroll-triggered, unmuted, looping -->
                             <iframe
                                 id="ethos-founder-video-el"
-                                data-src="https://player.mediadelivery.net/embed/680285/1ffffba2-06d9-4e92-9088-d9a47ee713be?autoplay=true&loop=false&muted=true&preload=true&responsive=true"
-                                style="width:100%; height:100%; position:absolute; top:0; left:0; border:none; pointer-events:auto;"
-                                allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
+                                src="https://player.mediadelivery.net/embed/680285/2cbed95a-0d33-4c9c-9382-8c40b4ea9987?autoplay=true&loop=true&muted=true&preload=true&responsive=true"
+                                data-src="https://player.mediadelivery.net/embed/680285/2cbed95a-0d33-4c9c-9382-8c40b4ea9987?autoplay=true&loop=true&muted=true&preload=true&responsive=true"
+                                loading="lazy"
+                                style="border:0;position:absolute;top:0;left:0;width:100%;height:100%;"
+                                allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;fullscreen;"
+                                allowfullscreen="true"
                             ></iframe>
                             <!-- Sound unlock overlay — shown if browser blocks unmuted autoplay -->
                             <div class="ethos-sound-overlay" id="ethos-sound-overlay">
@@ -810,7 +824,7 @@
             </div>
 
             <div class="final-cta-right cine-cta-form-trigger">
-                <a href="begin.html" class="hero-btn" style="margin-bottom: 4rem;">START A PROJECT</a>
+                <a href="begin.html" class="final-cta-link">START A PROJECT</a>
 
                 <div class="final-cta-info cine-cta-info">
                     <div class="final-cta-info-block">
@@ -947,6 +961,44 @@
     </footer>
 
     <script src="js/main.js"></script>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         FOUNDER INTRODUCTION MODAL
+    ═══════════════════════════════════════════════════════════ -->
+    <div class="founder-intro-overlay" id="founder-intro-overlay" role="dialog" aria-modal="true" aria-label="Founder Introduction">
+        <!-- Backdrop -->
+        <div class="fi-backdrop"></div>
+
+        <!-- Close -->
+        <button class="fi-close" id="fi-close-btn" aria-label="Close introduction">&times;</button>
+
+        <!-- Content -->
+        <div class="fi-content">
+            <!-- Editorial Card -->
+            <div class="fi-card">
+                <span class="fi-label">Founder Introduction</span>
+                <h2 class="fi-heading">WELCOME.</h2>
+                <p class="fi-copy">Thanks for taking a moment to visit.<br>Rather than asking you to read about Vdeology, I'd rather introduce myself personally.</p>
+                <button class="fi-play-btn" id="fi-play-btn">&#9654; WATCH INTRODUCTION</button>
+                <button class="fi-skip-btn" id="fi-skip-btn">Continue to Website</button>
+            </div>
+
+            <!-- Video Container (hidden until play is clicked) -->
+            <div class="fi-video-wrap">
+                <div class="fi-video-frame">
+                    <iframe id="fi-video-iframe"
+                        loading="lazy"
+                        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen;"
+                        allowfullscreen="true"></iframe>
+                </div>
+                <div class="fi-continue-wrap">
+                    <button class="fi-continue-btn" id="fi-continue-btn">Continue Exploring</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/founder-intro.js"></script>
 </body>
 
 </html>
