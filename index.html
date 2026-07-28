@@ -114,7 +114,7 @@
 
     <!-- ===== CINEMATIC BACKGROUND VIDEO ===== -->
     <div class="hero-video-wrapper" id="hero-video-wrapper">
-        <iframe class="hero-video responsive-iframe" id="hero-video" data-desktop-src="https://player.mediadelivery.net/embed/680285/2bd9df76-4e82-464d-a17d-7a9e6032a8c8?autoplay=true&loop=true&muted=true&preload=true&responsive=true" data-mobile-src="https://player.mediadelivery.net/embed/680285/d603d281-970f-4012-8682-5b278ea46a82?autoplay=true&loop=true&muted=true&preload=true&responsive=true" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%; height:100%; position:absolute; top:0; left:0; border:none; pointer-events:none;"></iframe>
+        <iframe class="hero-video responsive-iframe" id="hero-video" data-desktop-src="https://player.mediadelivery.net/embed/680285/2bd9df76-4e82-464d-a17d-7a9e6032a8c8?autoplay=true&loop=true&muted=true&preload=true&responsive=true" data-mobile-src="https://player.mediadelivery.net/embed/680285/70c7b88b-bb5d-4c44-9877-51acd733e934?autoplay=true&loop=true&muted=true&preload=true&responsive=true" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%; height:100%; position:absolute; top:0; left:0; border:none; pointer-events:none;"></iframe>
         <!-- Overlay 1: Cinematic gradient -->
         <div class="hero-video-overlay" id="hero-video-overlay"></div>
     </div>
@@ -397,6 +397,115 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Marquee Drag/Scroll Script -->
+            <script>
+                (function() {
+                    const track = document.getElementById('ethos-marquee-track');
+                    if (!track) return;
+
+                    // Disable CSS animation to take over via JS
+                    track.style.animation = 'none';
+                    track.style.touchAction = 'pan-y'; // Prevent horizontal browser scrolling, allow vertical
+                    track.style.cursor = 'grab';
+
+                    let currentX = 0;
+                    let isDragging = false;
+                    let prevX = 0;
+                    let velocity = 0;
+                    let isHovered = false;
+
+                    // Calculate speed to match the original 55s CSS animation
+                    const getSpeed = () => {
+                        const trackWidth = track.scrollWidth / 2;
+                        // 55 seconds at 60fps = 3300 frames
+                        return trackWidth / 3300 || 0.8;
+                    };
+
+                    function update() {
+                        const trackWidth = track.scrollWidth / 2;
+
+                        if (!isDragging) {
+                            let targetVelocity = isHovered ? 0 : -getSpeed();
+                            // Smoothly interpolate velocity for ease-in/ease-out
+                            velocity += (targetVelocity - velocity) * 0.05;
+                            currentX += velocity;
+                        } else {
+                            // Decay velocity quickly while holding still so it doesn't throw unexpectedly
+                            velocity *= 0.8;
+                        }
+
+                        if (trackWidth > 0) {
+                            // Seamless infinite loop backwards
+                            while (currentX > 0) {
+                                currentX -= trackWidth;
+                            }
+                            // Seamless infinite loop forwards
+                            while (currentX <= -trackWidth) {
+                                currentX += trackWidth;
+                            }
+                        }
+
+                        track.style.transform = `translateX(${currentX}px)`;
+                        requestAnimationFrame(update);
+                    }
+
+                    // Mouse events
+                    track.addEventListener('mouseenter', () => isHovered = true);
+                    track.addEventListener('mouseleave', () => {
+                        isHovered = false;
+                        isDragging = false;
+                        track.style.cursor = 'grab';
+                    });
+
+                    track.addEventListener('mousedown', (e) => {
+                        isDragging = true;
+                        track.style.cursor = 'grabbing';
+                        prevX = e.pageX;
+                        velocity = 0;
+                    });
+
+                    track.addEventListener('mousemove', (e) => {
+                        if (!isDragging) return;
+                        e.preventDefault(); // Prevent text selection
+                        const x = e.pageX;
+                        const delta = (x - prevX) * 1.5; 
+                        prevX = x;
+                        currentX += delta;
+                        velocity = delta; // record velocity for momentum throw
+                    });
+
+                    track.addEventListener('mouseup', () => {
+                        isDragging = false;
+                        track.style.cursor = 'grab';
+                    });
+
+                    // Touch events for mobile
+                    track.addEventListener('touchstart', (e) => {
+                        isDragging = true;
+                        isHovered = true; // Pause auto-scroll
+                        prevX = e.touches[0].pageX;
+                        velocity = 0;
+                    }, { passive: true });
+
+                    track.addEventListener('touchmove', (e) => {
+                        if (!isDragging) return;
+                        const x = e.touches[0].pageX;
+                        const delta = (x - prevX) * 1.5;
+                        prevX = x;
+                        currentX += delta;
+                        velocity = delta;
+                    }, { passive: true });
+
+                    track.addEventListener('touchend', () => {
+                        isDragging = false;
+                        isHovered = false;
+                    });
+
+                    // Start loop
+                    requestAnimationFrame(update);
+                })();
+            </script>
 
             <!-- Soft gradient bridge into Work section -->
             <div class="ethos-bridge-gradient"></div>

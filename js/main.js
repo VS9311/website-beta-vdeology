@@ -872,13 +872,30 @@ function renderWorkCards(tabKey) {
             return card;
         }
 
-        topItems.forEach(item => {
-            trackTop.appendChild(createCardElement(item));
-        });
+        function createStrip(itemsArray) {
+            const strip = document.createElement('div');
+            strip.className = 'showcase-strip';
+            strip.style.display = 'flex';
+            strip.style.gap = '40px';
+            strip.style.paddingRight = '40px'; // So the last card has a gap before the next strip starts
+            
+            itemsArray.forEach(item => {
+                strip.appendChild(createCardElement(item));
+            });
+            return strip;
+        }
 
-        bottomItems.forEach(item => {
-            trackBottom.appendChild(createCardElement(item));
-        });
+        trackTop.style.gap = '0';
+        trackTop.appendChild(createStrip(topItems));
+        trackTop.appendChild(createStrip(topItems));
+        trackTop.appendChild(createStrip(topItems));
+        trackTop.appendChild(createStrip(topItems));
+
+        trackBottom.style.gap = '0';
+        trackBottom.appendChild(createStrip(bottomItems));
+        trackBottom.appendChild(createStrip(bottomItems));
+        trackBottom.appendChild(createStrip(bottomItems));
+        trackBottom.appendChild(createStrip(bottomItems));
 
         // Re-init magnetic on new cards
         initMagneticBtns();
@@ -1543,125 +1560,130 @@ initMagneticBtns();
 })();
 
 
-// ===== MOBILE HYBRID CAROUSEL (AUTO + TOUCH) =====
+// ===== HYBRID CAROUSEL (INFINITE LOOP + TOUCH/DRAG) =====
 (function() {
     const wrappers = document.querySelectorAll(".showcase-row-wrapper");
     if (!wrappers.length) return;
 
-    let autoPanReq;
-    let resumeTimeout;
-    let isAutoPanning = false;
-
-    // Track state for each row
-    const rows = Array.from(wrappers).map((wrapper, index) => {
-        return {
-            el: wrapper,
-            track: wrapper.querySelector(".showcase-track"),
-            speed: 0.35, 
-            direction: index % 2 === 0 ? -1 : 1, // Start drifting in opposite directions
-            offsetX: 0 // pure translateX offset
-        };
-    });
-
-    function startAutoPan() {
-        if (!isAutoPanning && window.innerWidth <= 1024) {
-            isAutoPanning = true;
-            autoPanReq = requestAnimationFrame(panLoop);
-        }
-    }
-
-    function stopAutoPan() {
-        isAutoPanning = false;
-        if (autoPanReq) cancelAnimationFrame(autoPanReq);
-    }
-
-    function panLoop() {
-        if (!isAutoPanning || window.innerWidth > 1024) return;
+    wrappers.forEach((wrapper, index) => {
+        const track = wrapper.querySelector(".showcase-track");
+        if (!track) return;
         
-        rows.forEach(row => {
-            if (!row.track) return;
+        // Setup wrapper for custom translate dragging
+        wrapper.style.overflow = 'hidden';
+        wrapper.style.cursor = 'grab';
+        
+        let currentX = 0;
+        let isDragging = false;
+        let isHovered = false;
+        let prevX = 0;
+        let velocity = 0;
+        
+        // Base drift speed
+        const baseSpeed = 0.35;
+        // Top row moves left (-1), bottom row moves right (1)
+        const direction = index % 2 === 0 ? -1 : 1; 
+
+        function updateLoop() {
+            // Wait until strips are rendered by renderWorkCards
+            const strip = track.firstElementChild;
+            if (!strip) {
+                requestAnimationFrame(updateLoop);
+                return;
+            }
             
-            // maxScroll is the native bounds of the wrapper
-            const maxScroll = row.el.scrollWidth - row.el.clientWidth;
-            if (maxScroll <= 0) return;
+            // The exact width of one cloned strip
+            const stripWidth = strip.offsetWidth; 
 
-            // Visual scroll position is native scrollLeft minus the visual translation
-            const visualPos = row.el.scrollLeft - row.offsetX; 
-
-            // Easing near the edges
-            const edgeDistance = Math.min(visualPos, maxScroll - visualPos);
-            let currentSpeed = row.speed;
-            if (edgeDistance < 60) {
-                currentSpeed = Math.max(0.05, row.speed * (edgeDistance / 60));
+            if (!isDragging) {
+                // Determine target speed based on hover
+                let targetVelocity = isHovered ? 0 : (baseSpeed * direction);
+                
+                // Smooth ease in/out for auto drift
+                velocity += (targetVelocity - velocity) * 0.05;
+                currentX += velocity;
+            } else {
+                // Apply friction while dragging stops but hasn't released
+                velocity *= 0.8;
             }
 
-            // offsetX represents the visual shift relative to the native scroll position
-            // direction: 1 means moving track RIGHT (visual content moves left)
-            row.offsetX += (currentSpeed * row.direction);
-
-            row.track.style.transform = `translateX(${row.offsetX}px) translateZ(0)`;
-
-            // Reverse direction seamlessly if hitting the visual bounds
-            if (row.direction === -1 && visualPos >= maxScroll - 0.5) {
-                row.direction = 1; 
-            } else if (row.direction === 1 && visualPos <= 0.5) {
-                row.direction = -1;
-            }
-        });
-
-        autoPanReq = requestAnimationFrame(panLoop);
-    }
-
-    function handleInteraction() {
-        if (window.innerWidth > 1024) return;
-        stopAutoPan();
-        clearTimeout(resumeTimeout);
-        
-        // BAKE THE VISUAL TRANSLATE INTO NATIVE SCROLL
-        // This makes the transition to native touch perfectly seamless
-        rows.forEach(row => {
-            if (row.offsetX !== 0) {
-                const visualPos = row.el.scrollLeft - row.offsetX;
-                row.offsetX = 0;
-                row.track.style.transform = `translateX(0px) translateZ(0)`;
-                row.el.scrollLeft = visualPos; // Restore exact visual position natively
-            }
-        });
-    }
-
-    function handleInteractionEnd() {
-        if (window.innerWidth > 1024) return;
-        clearTimeout(resumeTimeout);
-        resumeTimeout = setTimeout(() => {
-            // Decide drift direction based on current scroll position
-            rows.forEach(row => {
-                const maxScroll = row.el.scrollWidth - row.el.clientWidth;
-                if (row.el.scrollLeft > maxScroll / 2) {
-                    row.direction = 1; // drift left visually (track moves right)
-                } else {
-                    row.direction = -1; // drift right visually
+            // Seamless infinite loop bounds
+            if (stripWidth > 0) {
+                // Moving left
+                while (currentX <= -stripWidth) {
+                    currentX += stripWidth;
                 }
-            });
-            startAutoPan();
-        }, 3500); 
-    }
+                // Moving right
+                while (currentX > 0) {
+                    currentX -= stripWidth;
+                }
+            }
 
-    wrappers.forEach(wrapper => {
-        wrapper.addEventListener("touchstart", handleInteraction, {passive: true});
-        wrapper.addEventListener("touchend", handleInteractionEnd, {passive: true});
-        
-        // Also capture scroll events (e.g. from native inertia or trackpad)
-        wrapper.addEventListener("scroll", () => {
-            if (isAutoPanning) return; // Ignore if panLoop is running
-            handleInteraction();
-            handleInteractionEnd(); 
-        }, {passive: true});
+            track.style.transform = `translateX(${currentX}px)`;
+            requestAnimationFrame(updateLoop);
+        }
+
+        // Mouse events
+        wrapper.addEventListener('mouseenter', () => isHovered = true);
+        wrapper.addEventListener('mouseleave', () => {
+            isHovered = false;
+            if (isDragging) {
+                isDragging = false;
+                wrapper.style.cursor = 'grab';
+            }
+        });
+
+        wrapper.addEventListener('mousedown', (e) => {
+            if (e.target.closest('button, a')) return;
+            e.preventDefault();
+            isDragging = true;
+            wrapper.style.cursor = 'grabbing';
+            prevX = e.pageX;
+            velocity = 0;
+        });
+
+        wrapper.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.pageX;
+            const delta = (x - prevX) * 1.5;
+            prevX = x;
+            currentX += delta;
+            velocity = delta;
+        });
+
+        wrapper.addEventListener('mouseup', () => {
+            if (isDragging) {
+                isDragging = false;
+                wrapper.style.cursor = 'grab';
+            }
+        });
+
+        // Touch events
+        wrapper.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            isHovered = true; // Pause auto drift when touched
+            prevX = e.touches[0].pageX;
+            velocity = 0;
+        }, { passive: true });
+
+        wrapper.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const x = e.touches[0].pageX;
+            const delta = (x - prevX) * 1.5;
+            prevX = x;
+            currentX += delta;
+            velocity = delta;
+        }, { passive: true });
+
+        wrapper.addEventListener('touchend', () => {
+            isDragging = false;
+            isHovered = false;
+        });
+
+        // Start animation loop
+        requestAnimationFrame(updateLoop);
     });
-
-    // Start auto-motion on load
-    if (window.innerWidth <= 1024) {
-        setTimeout(startAutoPan, 500);
-    }
 })();
 
 // ===== DEEP LINK: FOUNDER VIDEO =====
