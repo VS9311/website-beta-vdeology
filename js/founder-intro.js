@@ -24,7 +24,7 @@
     let videoStarted = false;
 
     // Bunny embed base URL (autoplay enabled, NOT muted so browser requires user gesture)
-    const BUNNY_SRC = 'https://player.mediadelivery.net/embed/680285/61432573-f24d-45a8-a491-6a926e4e68ef?autoplay=true&loop=false&muted=false&preload=true&responsive=true';
+    const BUNNY_SRC = 'https://player.mediadelivery.net/embed/680285/a4512582-1951-4bc0-b003-a63324465707?autoplay=true&loop=true&muted=true&preload=true&responsive=true';
 
     // ── OPEN ──
     function open() {
