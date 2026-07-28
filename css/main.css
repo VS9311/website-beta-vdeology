@@ -3179,41 +3179,12 @@ a.final-cta-info-value:hover {
         max-width: 100vw !important;
     }
 
-    /* 2. Enable horizontal swipe per row */
-    .showcase-row-wrapper {
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        -webkit-overflow-scrolling: touch !important;
-        scroll-snap-type: x mandatory !important;
-        will-change: scroll-position !important; /* Optimizes for JS auto-pan */
-        width: 100vw !important;
-        padding-left: 24px !important; /* Safe area */
-        padding-bottom: 24px !important;
-        scrollbar-width: none !important;
-        -ms-overflow-style: none !important;
-    }
-    .showcase-row-wrapper::-webkit-scrollbar {
-        display: none !important;
-    }
-
-    /* 3. Disable desktop JS scroll translation */
-    .showcase-track {
-        display: flex !important;
-        width: max-content !important;
-        will-change: transform !important;
-    }
-
-    /* 4. Fix card widths for mobile */
+    /* 2. Fix card widths for mobile */
     .showcase-card {
         width: 80vw !important; /* Leaves 20vw for next card to hint */
         max-width: 400px !important;
         flex: 0 0 auto !important;
-        scroll-snap-align: start !important;
-        margin-right: 16px !important;
-    }
-    
-    .showcase-card:last-child {
-        margin-right: 48px !important; /* Padding after last card */
+        /* margin-right removed so flex gap handles spacing cleanly */
     }
 }
 
