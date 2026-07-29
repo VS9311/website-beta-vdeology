@@ -159,50 +159,114 @@ const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
 let isShowcaseInView = false;
 window.initShowcaseAnimation = function() {
     const outer = document.getElementById('showcase-outer');
-    if (!outer) return;
+    const topTrack = document.getElementById('showcase-track-top');
+    const bottomTrack = document.getElementById('showcase-track-bottom');
+    if (!outer || !topTrack || !bottomTrack) return;
 
-    let currentProgress = 0;
-    let targetProgress = 0;
-    const lerpFactor = 0.08; // smooth easing factor for premium glide feel
+    function setupInfiniteScroll(track, direction) {
+        track.style.touchAction = 'pan-y'; // Prevent horizontal browser scrolling, allow vertical
+        track.style.cursor = 'grab';
 
-    function calcTargetProgress() {
-        if (!isShowcaseInView) return;
-        const rect = outer.getBoundingClientRect();
-        const elementTop = rect.top;
-        const elementHeight = rect.height;
-        const viewportHeight = window.innerHeight;
+        let currentX = 0;
+        let isDragging = false;
+        let prevX = 0;
+        let velocity = 0;
+        let isHovered = false;
+        let lastTime = performance.now();
 
-        const scrollPercent = (viewportHeight - elementTop) / (viewportHeight + elementHeight);
-        targetProgress = Math.max(0, Math.min(1, scrollPercent));
-    }
-
-    window.addEventListener('scroll', calcTargetProgress, { passive: true });
-    calcTargetProgress();
-    currentProgress = targetProgress;
-
-    function animateRows() {
-        if (isShowcaseInView) {
-            currentProgress += (targetProgress - currentProgress) * lerpFactor;
-
-            // Travel range: 25% of viewport width is an elegant displacement range
-            const travelRange = window.innerWidth * 0.25;
-
-            const topTranslateX = (currentProgress - 0.5) * travelRange;
-            const bottomTranslateX = (0.5 - currentProgress) * travelRange;
-
-            const topTrack = document.getElementById('showcase-track-top');
-            const bottomTrack = document.getElementById('showcase-track-bottom');
-
-            if (topTrack) {
-                topTrack.style.transform = `translateX(${topTranslateX}px) translateZ(0)`;
+        function update(time) {
+            if (!isShowcaseInView) {
+                lastTime = time;
+                requestAnimationFrame(update);
+                return;
             }
-            if (bottomTrack) {
-                bottomTrack.style.transform = `translateX(${bottomTranslateX}px) translateZ(0)`;
+            
+            const dt = Math.min((time - lastTime) / 16.66, 2.0); // Normalize to ~60fps, cap at 2 frames
+            lastTime = time;
+
+            const strip = track.firstElementChild;
+            if (!strip) return requestAnimationFrame(update);
+            const stripWidth = strip.getBoundingClientRect().width;
+
+            if (!isDragging) {
+                // Slower auto-scroll speed for premium feel, scaled by dt
+                let targetVelocity = isHovered ? 0 : (0.5 * direction * dt);
+                velocity += (targetVelocity - velocity) * 0.05 * dt;
+                currentX += velocity;
+            } else {
+                velocity *= Math.pow(0.8, dt);
             }
+
+            if (stripWidth > 0) {
+                while (currentX > 0) {
+                    currentX -= stripWidth;
+                }
+                while (currentX <= -stripWidth) {
+                    currentX += stripWidth;
+                }
+            }
+
+            track.style.transform = `translateX(${currentX}px)`;
+            requestAnimationFrame(update);
         }
-        requestAnimationFrame(animateRows);
+
+        // Mouse events
+        track.addEventListener('mouseenter', () => isHovered = true);
+        track.addEventListener('mouseleave', () => {
+            isHovered = false;
+            isDragging = false;
+            track.style.cursor = 'grab';
+        });
+
+        track.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            track.style.cursor = 'grabbing';
+            prevX = e.pageX;
+            velocity = 0;
+        });
+
+        track.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault(); // Prevent text selection
+            const x = e.pageX;
+            const delta = (x - prevX) * 1.5; 
+            prevX = x;
+            currentX += delta;
+            velocity = delta; // record velocity for momentum throw
+        });
+
+        track.addEventListener('mouseup', () => {
+            isDragging = false;
+            track.style.cursor = 'grab';
+        });
+
+        // Touch events for mobile
+        track.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            isHovered = true; // Pause auto-scroll
+            prevX = e.touches[0].pageX;
+            velocity = 0;
+        }, { passive: true });
+
+        track.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const x = e.touches[0].pageX;
+            const delta = (x - prevX) * 1.5;
+            prevX = x;
+            currentX += delta;
+            velocity = delta;
+        }, { passive: true });
+
+        track.addEventListener('touchend', () => {
+            isDragging = false;
+            isHovered = false;
+        });
+
+        requestAnimationFrame(update);
     }
-    requestAnimationFrame(animateRows);
+
+    setupInfiniteScroll(topTrack, -1); // Top moves left
+    setupInfiniteScroll(bottomTrack, 1); // Bottom moves right
 };
 
 // ===== SCROLL REVEAL (IntersectionObserver) =====
