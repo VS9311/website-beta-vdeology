@@ -503,7 +503,12 @@ function populateProjectData(item) {
         if (videoHero) videoHero.style.display = 'none';
         if (playOverlay) playOverlay.style.display = 'none';
         if (imgHero) {
-            imgHero.src = item.heroImage || item.img || '';
+            const sourceHero = document.getElementById('project-panel-source-hero');
+            const heroImgSrc = item.heroImage || item.img || '';
+            if (sourceHero && heroImgSrc) {
+                sourceHero.srcset = heroImgSrc.replace(/\.(png|jpe?g)$/i, '.webp');
+            }
+            imgHero.src = heroImgSrc;
             imgHero.alt = item.title;
             imgHero.style.display = 'block';
         }
@@ -523,6 +528,10 @@ function populateProjectData(item) {
     const profileImg = document.getElementById('project-panel-profile-img');
     if (item.profileImg) {
         if (profileImg) {
+            const sourceProfile = document.getElementById('project-panel-source-profile');
+            if (sourceProfile) {
+                sourceProfile.srcset = item.profileImg.replace(/\.(png|jpe?g)$/i, '.webp');
+            }
             profileImg.src = item.profileImg;
             profileImg.alt = item.title;
         }
@@ -539,11 +548,18 @@ function populateProjectData(item) {
         const imgs = (item.deliverableImages || '').split(',').map(s => s.trim()).filter(Boolean);
         if (imgs.length) {
             imgs.forEach(src => {
+                const picture = document.createElement('picture');
+                picture.style.display = 'contents';
+                const source = document.createElement('source');
+                source.type = 'image/webp';
+                source.srcset = src.replace(/\.(png|jpe?g)$/i, '.webp');
                 const img = document.createElement('img');
                 img.src = src;
                 img.alt = item.title;
                 img.className = 'deliverable-img';
-                galEl.appendChild(img);
+                picture.appendChild(source);
+                picture.appendChild(img);
+                galEl.appendChild(picture);
             });
             if (delSection) delSection.style.display = 'block';
         } else {
@@ -701,7 +717,9 @@ const WORK_TAB_DATA = {
             solution: 'The project was approached as a hybrid between a documentary, travel film, and philosophical visual essay. Rather than documenting events chronologically, the narrative was structured around internal transformation.<br><br>Creative decisions included:<br><br>\u2022 First-person reflective narration.<br>\u2022 Self-shot cinematography and travel footage.<br>\u2022 Symbolic visual language using landscapes, nature, architecture, light, and solitude.<br>\u2022 Essay-style storytelling inspired by philosophical and documentary filmmaking.<br>\u2022 Sound design and pacing designed to support contemplation and emotional immersion.<br>\u2022 Editorial structure based on the archetypal hero\'s journey and the concept of self-discovery.<br><br>The film intentionally prioritised emotional truth over factual documentation, allowing visuals and narration to work together as a personal journal.',
             outcome: 'The result was a deeply personal film that expanded beyond travel content into a broader exploration of creativity, faith, and self-understanding.<br><br>The project became an important milestone in developing a distinctive storytelling voice \u2014 one that combines philosophy, documentary filmmaking, and cinematic visual language.<br><br>More importantly, it demonstrated how meaningful stories can be created with limited resources, using authenticity, strong editorial direction, and intentional visual design rather than large production budgets.<br><br><strong>Key Takeaway:</strong> A Fool\'s Journey demonstrates how abstract ideas can be translated into emotionally resonant stories through thoughtful writing, strong editorial direction, and cinematic execution. The project serves as both a personal reflection and a proof of concept for narrative-driven filmmaking that prioritises meaning over spectacle.',
             scope: 'Documentary Filmmaking,Visual Essay Development,Editorial Direction,Narrative Structure,Philosophical Storytelling,Creative Writing,Voiceover Writing,Travel Cinematography,Self-Shooting Production,Sound Design,Colour Grading,Personal Branding,Creative Direction,Solo Production Workflow,DIY Filmmaking',
-            img: 'Project%20card%20thymnails/Foolss_Journey_project%20card%20thumbnail.jpg'
+            img: 'Project%20card%20thymnails/Foolss_Journey_project%20card%20thumbnail.jpg',
+            imgWidth: 1280,
+            imgHeight: 720
         },
         // 2. SPORTSKEEDA WRESTLING (rewritten — top)
         {
@@ -717,7 +735,9 @@ const WORK_TAB_DATA = {
             solution: 'I developed and managed a comprehensive production workflow spanning editorial planning, scripting, production, publishing, optimization, and performance review.<br><br><strong>Editorial Strategy:</strong> Story selection and trend analysis, audience research, documentary and feature development, script writing and narrative structuring, platform-specific content packaging.<br><br><strong>Audience Retention Engineering:</strong> Hook development and opening sequences, viewer retention frameworks, narrative pacing systems, engagement-driven visual storytelling.<br><br><strong>Production \u0026 Creative:</strong> Long-form documentary editing, short-form content creation, motion graphics and branding, thumbnail systems, sound design and finishing, multi-platform asset production.<br><br><strong>Workflow Innovation:</strong> To support increasing content volume, I integrated repeatable production systems and AI-assisted workflows where appropriate, enabling faster turnaround times while maintaining quality and consistency.<br><br><strong>Featured Project \u2014 The Rise and Fall of Matt Riddle:</strong><br>One of the channel\'s most successful long-form documentary projects explored the career of former UFC fighter and WWE superstar Matt Riddle. The documentary followed Riddle\'s journey from adversity and professional setbacks to becoming one of wrestling\'s most popular modern performers before examining the controversies that ultimately altered the trajectory of his career. Rather than focusing solely on wrestling events, the project approached the subject as a character-driven documentary exploring ambition, resilience, success, public perception, and personal accountability. The final project generated over 500,000 views and became one of the channel\'s strongest-performing documentary releases.',
             outcome: 'Over the course of the engagement, the channel experienced significant growth across multiple performance indicators.<br><br><strong>Growth Metrics:</strong><br>\u2022 Grew YouTube subscribers from 30,000 to 180,000.<br>\u2022 Generated over 50 million views.<br>\u2022 Produced 2,055,431+ hours of watch time.<br>\u2022 Increased engagement by more than 200%.<br>\u2022 Achieved 70\u201380% retention on short-form content.<br>\u2022 Achieved 60\u201370% retention on long-form content.<br>\u2022 Consistently outperformed platform averages across multiple content formats.<br><br>Beyond the numbers, the project established repeatable editorial systems, stronger audience loyalty, and scalable production workflows capable of supporting sustained growth.<br><br><strong>Key Takeaway:</strong> This project demonstrates the ability to build and scale content ecosystems that combine editorial strategy, documentary storytelling, audience psychology, and production execution.',
             scope: 'Content Strategy,Documentary Storytelling,Editorial Direction,Script Writing,Audience Growth,Audience Retention Strategy,Long-Form Video Editing,Short-Form Content Production,Motion Graphics,Brand Systems Development,Thumbnail Design,Cross-Platform Publishing,Analytics \u0026 Performance Optimisation,AI-Assisted Production Workflows,Media Operations',
-            img: 'img/sportskeeda_wrestling.jpg'
+            img: 'img/sportskeeda_wrestling.jpg',
+            imgWidth: 1024,
+            imgHeight: 576
         },
         // 3. THE COACH (rewritten — top)
         {
@@ -733,7 +753,9 @@ const WORK_TAB_DATA = {
             solution: 'The documentary was approached as a character-driven story rather than a sports film. While wrestling served as the backdrop, the core narrative focused on Jon Owens\' lifelong commitment to helping others and preserving a tradition he believed was worth fighting for.<br><br>As a solo filmmaker, I was responsible for every stage of production:<br><br><strong>Development \u0026 Research:</strong> Subject research, story development, documentary planning, interview preparation.<br><br><strong>Production:</strong> Directing, cinematography, audio recording, location management, interview execution, observational documentary filming.<br><br><strong>Post-Production:</strong> Narrative editing, story structuring, archival integration, color grading, sound design, music selection, final delivery.<br><br>In addition to the feature documentary itself, I produced promotional trailers, social media assets, and marketing content designed to build anticipation ahead of release.<br><br><strong>The Story:</strong> At the heart of the film is Jon Owens\' belief that wrestling is about far more than competition. For over thirty years, he has offered free wrestling instruction to young people throughout Kent, using sport as a vehicle for discipline, confidence, and personal development. Ultimately, The Coach is not a film about wrestling. It is a film about purpose.',
             outcome: 'The completed documentary was selected as a finalist at the Serbest International Film Festival, providing international recognition for an independently produced project created without institutional support.<br><br>The film also generated significant engagement within the British wrestling and martial arts communities, helping bring attention to Jon\'s work and the wider conversation surrounding the future of British wrestling.<br><br>Beyond the festival recognition, the project demonstrated the ability to independently develop, produce, and deliver a feature-length documentary from concept to completion.<br><br><strong>Key Takeaway:</strong> The Coach demonstrates the ability to independently lead complex documentary projects from concept to final delivery. By combining research, storytelling, cinematography, editing, and creative direction within a single production workflow, the project transformed a local story into a universally relatable film about mentorship, legacy, and the enduring value of service to others.',
             scope: 'Documentary Direction,Documentary Research,Story Development,Cinematography,Interview Production,Audio Recording,Narrative Editing,Documentary Storytelling,Colour Grading,Sound Design,Post-Production Supervision,Promotional Content Production,Solo Filmmaking,Creative Direction',
-            img: 'img/the_coach_documentary.jpg'
+            img: 'img/the_coach_documentary.jpg',
+            imgWidth: 1024,
+            imgHeight: 576
         },
         // 4. VIDEOGRAPHES PARIS (new — top right)
         {
@@ -749,7 +771,9 @@ const WORK_TAB_DATA = {
             solution: 'My role extended beyond simply assembling footage. Each project required a storytelling-first editorial workflow:<br><br>\u2022 Reviewing and organizing extensive multi-camera footage.<br>\u2022 Identifying emotional story beats and narrative anchors.<br>\u2022 Building cinematic pacing through music, rhythm, and visual sequencing.<br>\u2022 Refining transitions and visual flow to create seamless viewing experiences.<br>\u2022 Applying colour balancing and finishing techniques to maintain brand consistency.<br>\u2022 Collaborating closely with the studio founders to align edits with their creative vision and client expectations.<br><br>The goal was always to create films that felt timeless, emotionally authentic, and visually refined.',
             outcome: 'Over the course of the collaboration, I contributed to the post-production of multiple wedding films and brand-focused projects for a European audience.<br><br>The experience strengthened my ability to:<br><br>\u2022 Edit long-form emotional narratives.<br>\u2022 Work within established brand systems.<br>\u2022 Deliver professional client work remotely.<br>\u2022 Balance documentary realism with cinematic presentation.<br>\u2022 Maintain consistency across high-volume production pipelines.<br><br>The collaboration also provided valuable experience working within the luxury wedding filmmaking space, where storytelling, emotion, and attention to detail are essential.<br><br><strong>Key Takeaway:</strong> This collaboration demonstrates the ability to integrate into an established international production team, uphold professional quality standards, and craft emotionally engaging films that resonate with audiences across cultures and markets.',
             scope: 'Wedding Film Editing,Documentary Storytelling,Narrative Construction,Editorial Direction,Remote Creative Collaboration,Colour Correction,Colour Grading,Sound Design,Music Synchronisation,Long-Form Video Editing,Client Delivery Workflows,Creative Problem Solving,Post-Production Management',
-            img: 'Project%20card%20thymnails/videographesprojectcardthumbnail.jpg'
+            img: 'Project%20card%20thymnails/videographesprojectcardthumbnail.jpg',
+            imgWidth: 1920,
+            imgHeight: 1080
         },
         // ===== BOTTOM ROW =====
         // 5. HIP HOP HEAVYWEIGHTS (new — bottom left)
@@ -766,7 +790,9 @@ const WORK_TAB_DATA = {
             solution: 'My role evolved beyond post-production into a hybrid editorial and creative support position. Responsibilities included:<br><br>\u2022 Long-form video editing.<br>\u2022 Narrative restructuring and pacing improvements.<br>\u2022 Editorial problem-solving on stalled or unfinished productions.<br>\u2022 Motion graphics integration.<br>\u2022 Thumbnail and graphic asset creation.<br>\u2022 Visual identity development.<br>\u2022 Sound design and music integration.<br>\u2022 Platform-ready delivery and optimization.<br><br>In several instances, I stepped into projects that had stalled during production and helped bring them across the finish line by rebuilding structure, refining pacing, and establishing a clearer editorial direction.<br><br><strong>Featured Project:</strong> One notable project explored the remarkable parallels between two defining cultural rivalries: Tupac Shakur and The Notorious B.I.G. vs Stone Cold Steve Austin and The Rock. The video examined how these iconic figures embodied anti-establishment archetypes that defined an entire generation, drawing comparisons between hip-hop culture and professional wrestling\'s Attitude Era. The challenge was translating a large volume of research into a compelling visual narrative capable of sustaining engagement while delivering meaningful analysis.',
             outcome: 'The collaboration helped establish a stronger editorial foundation for the channel while improving production efficiency and content consistency.<br><br>Through a combination of editing, creative problem-solving, and visual development, projects were successfully delivered that may otherwise have remained unfinished.<br><br>Most importantly, the collaboration demonstrated the value of combining editorial thinking with post-production expertise to solve problems beyond the edit timeline.<br><br><strong>Key Takeaway:</strong> This project demonstrates the ability to operate beyond the role of editor and contribute as an editorial partner. By combining storytelling, research interpretation, visual design, and post-production problem solving, the collaboration helped transform complex ideas into engaging long-form content while supporting the long-term development of a growing media brand.',
             scope: 'Editorial Development,Long-Form Video Editing,Visual Essay Production,Narrative Structure,Research-Based Storytelling,Motion Graphics,Thumbnail Design,Graphic Design,Sound Design,Creative Direction,Audience Retention Strategy,Post-Production Supervision,Content Packaging,YouTube Publishing Systems,Cross-Platform Media Production',
-            img: 'Project%20card%20thymnails/Hip_Hop_Heavyweights_Projectcardthumbnail.jpg'
+            img: 'Project%20card%20thymnails/Hip_Hop_Heavyweights_Projectcardthumbnail.jpg',
+            imgWidth: 1280,
+            imgHeight: 720
         },
         // 6. FIGHT PUNDIT LEAGUE (rewritten — bottom)
         {
@@ -782,7 +808,9 @@ const WORK_TAB_DATA = {
             solution: 'The project was approached from a storytelling-first perspective. Rather than focusing exclusively on competition footage, content was designed to highlight the personalities, preparation, sacrifices, and motivations behind the athletes.<br><br><strong>Editorial Strategy:</strong> Narrative-driven content development, athlete-focused storytelling, competition storyline construction, event promotion and audience anticipation.<br><br><strong>Content Production:</strong> Cinematic promotional videos, athlete profile features, event trailers, documentary-style content, social-first content packages.<br><br><strong>Brand Development:</strong> Motion graphics systems, typography frameworks, visual identity development, trailer-inspired editing structures, sound design systems.<br><br><strong>Workflow Innovation:</strong> To support the fast-paced nature of event production, AI-assisted workflows and rapid iteration systems were integrated into the production process, enabling higher output without compromising creative quality.<br><br><strong>Featured Project \u2014 Road to the Finals:</strong><br>One of the league\'s flagship storytelling initiatives was the production of Road to the Finals, a documentary-style mini-series designed to elevate audience investment ahead of the championship event. The project followed athletes through their preparation, training environments, and competitive journeys, providing audiences with a deeper understanding of the people behind the competition. By combining competition footage, training camp coverage, gym culture, interviews, and narrative storytelling, the series transformed a sporting event into an ongoing story.',
             outcome: 'The collaboration helped establish Fight Pundit\'s visual and editorial identity as a modern combat sports promotion.<br><br>Key achievements included:<br><br>\u2022 Creation of a cohesive visual brand system.<br>\u2022 Development of athlete-focused storytelling formats.<br>\u2022 Consistent production of platform-native content.<br>\u2022 Stronger audience engagement through narrative-driven media.<br>\u2022 Enhanced presentation of league events and promotional campaigns.<br>\u2022 Increased accessibility for audiences beyond the core grappling community.<br><br>Most importantly, the project demonstrated how storytelling can transform a sporting competition into a media brand.<br><br><strong>Key Takeaway:</strong> Fight Pundit demonstrates how cinematic storytelling, athlete-focused narratives, and strong editorial systems can elevate a sports promotion beyond event coverage and into a recognizable media brand.',
             scope: 'Creative Direction,Sports Storytelling,Documentary Production,Narrative Editing,Event Promotion,Trailer Production,Motion Graphics,Brand Identity Development,Audience Retention Strategy,Sound Design,Social Media Content Strategy,Athlete Storytelling,Editorial Direction,AI-Assisted Production Workflows',
-            img: 'img/fight_pundit_league.jpg'
+            img: 'img/fight_pundit_league.jpg',
+            imgWidth: 1024,
+            imgHeight: 576
         },
         // 7. KATANA (rewritten — bottom, IMAGE ONLY)
         {
@@ -800,7 +828,9 @@ const WORK_TAB_DATA = {
             deliverableImages: 'img/katana_brand_06.png,img/katana_brand_03.png,img/katana_brand_04.png,img/katana_brand_05.jpg,img/katana_product_01.jpg,img/katana_product_02.jpg',
             outcome: 'The project transformed Katana from an abstract concept into a fully realized brand platform capable of supporting future growth across multiple divisions.<br><br>Key outcomes included:<br><br>\u2022 Creation of a complete brand identity system.<br>\u2022 Development of scalable design guidelines.<br>\u2022 Establishment of a distinctive visual language.<br>\u2022 Alignment of product, promotion, and brand philosophy.<br>\u2022 Foundation for future merchandise and equipment launches.<br>\u2022 Positioning within the premium combat sports market.<br><br>Most importantly, the project established a framework capable of growing alongside the business while maintaining a consistent and recognisable identity.<br><br><strong>Key Takeaway:</strong> Katana demonstrates the ability to transform an idea into a scalable brand ecosystem. By combining strategic positioning, creative direction, identity design, and product thinking, the project established a foundation capable of supporting growth across media, merchandise, athlete management, and combat sports promotion while maintaining a cohesive cultural identity.',
             scope: 'Brand Strategy,Creative Direction,Project Management,Visual Identity Design,Brand Positioning,Logo Design,Typography Systems,Design Systems,Merchandise Branding,Product Visualisation,Marketing Design,Art Direction,Brand Guidelines,Combat Sports Branding',
-            img: 'videos/Katana_embedded%20_pic.png'
+            img: 'videos/Katana_embedded%20_pic.png',
+            imgWidth: 1536,
+            imgHeight: 1024
         },
         // 8. ALFRED KONUWA x FORBES (new — bottom right)
         {
@@ -817,7 +847,9 @@ const WORK_TAB_DATA = {
             solution: 'My involvement evolved into a hybrid editorial and creative partnership focused on both content execution and long-term scalability.<br><br>Responsibilities included:<br><br>\u2022 Long-form video editing.<br>\u2022 Motion graphics design.<br>\u2022 Visual branding development.<br>\u2022 Narrative pacing and retention optimization.<br>\u2022 Thumbnail and promotional asset creation.<br>\u2022 Graphic design systems.<br>\u2022 Multi-platform content adaptation.<br>\u2022 Workflow optimization and template development.<br><br>To improve production efficiency, I created reusable visual frameworks and branding assets that could be deployed across YouTube, X, Facebook, TikTok, and other distribution channels. This reduced production friction while creating stronger audience recognition and a more cohesive brand identity.<br><br><strong>Featured Project \u2014 MJF\'s WWE Obsession Is No Accident:</strong><br>One of the featured projects explored the fascinating business psychology behind Maxwell Jacob Friedman (MJF) and his public relationship with WWE while remaining one of All Elite Wrestling\'s biggest stars. The video examined MJF\'s difficult upbringing and \'villain origin story,\' his admiration for WWE\'s biggest performers, his strategic positioning within the wrestling industry, the psychology of personal branding, and the business value of controversy and public attention. Through pacing, visual storytelling, graphics, sound design, and careful structuring, the final piece transformed a complex industry discussion into an accessible and entertaining story.',
             outcome: 'The collaboration helped establish a more scalable and recognizable content operation while improving the efficiency of weekly production.<br><br>Key contributions included:<br><br>\u2022 Creation of reusable visual asset systems.<br>\u2022 Consistent editorial standards across projects.<br>\u2022 Stronger brand recognition through repeatable design frameworks.<br>\u2022 Improved viewer engagement through retention-focused editing.<br>\u2022 Faster production workflows through template-based systems.<br>\u2022 Reliable delivery of weekly content under demanding schedules.<br><br>Most importantly, the project demonstrated how thoughtful editorial systems can support the growth of a modern creator-led media brand.<br><br><strong>Key Takeaway:</strong> This collaboration demonstrates the ability to operate beyond the role of editor and contribute as a creative systems partner. By combining editorial strategy, visual branding, motion design, and production infrastructure, I helped support a creator whose work spans journalism, entertainment, and digital media while building scalable systems designed for long-term growth.',
             scope: 'Editorial Direction,Long-Form Video Editing,Audience Retention Strategy,Motion Graphics Design,Visual Identity Systems,YouTube Content Production,Brand Development,Content Packaging,Narrative Structuring,Sound Design,Multi-Platform Media Production,Graphic Design,Creative Strategy,Creator Economy Media',
-            img: 'Project%20card%20thymnails/AlfredKonuwaxForbes_Project%20card%20thumbnail.jpg'
+            img: 'Project%20card%20thymnails/AlfredKonuwaxForbes_Project%20card%20thumbnail.jpg',
+            imgWidth: 1200,
+            imgHeight: 675
         }
     ]
 };
@@ -858,7 +890,10 @@ function renderWorkCards(tabKey) {
             card.dataset.projectMeta              = item.meta || '';
             card.innerHTML = `
                 <div class="showcase-card-inner">
-                    <img src="${item.img}" alt="${item.title}" />
+                    <picture style="display: contents;">
+                        <source type="image/webp" srcset="${item.img.replace(/\.(png|jpe?g)$/i, '.webp')}">
+                        <img src="${item.img}" alt="${item.title}" width="${item.imgWidth || ''}" height="${item.imgHeight || ''}" />
+                    </picture>
                     <div class="card-overlay"></div>
                     <div class="card-content">
                         <div class="card-number">${item.category}</div>
@@ -1435,29 +1470,57 @@ initMagneticBtns();
         });
     }
 
-    // ── Scroll into view → start playing ──
-    const videoObserver = new IntersectionObserver((entries) => {
+    // ── Smart Preload & Reveal for Founder Video ──
+    const videoContainer = document.getElementById('ethos-founder-video');
+    let iframeLoaded = false;
+    let sectionInView = false;
+    
+    function checkAndReveal() {
+        if (sectionInView && iframeLoaded) {
+            if (videoContainer) videoContainer.classList.add('is-ready');
+        }
+    }
+
+    video.addEventListener('load', () => {
+        iframeLoaded = true;
+        checkAndReveal();
+    });
+    video.addEventListener('loadeddata', () => {
+        iframeLoaded = true;
+        checkAndReveal();
+    });
+
+    const preloadObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting && !hasStarted) {
                 hasStarted = true;
                 if (video.tagName === 'VIDEO') {
                     video.muted = true;
                     syncMuteIcon();
-                    video.play().then(() => {
-                        syncPlayPauseIcon();
-                        if (soundOverlay) soundOverlay.style.display = 'flex';
-                    }).catch(() => {});
+                    video.play().then(() => syncPlayPauseIcon()).catch(() => {});
                 } else if (video.tagName === 'IFRAME') {
                     video.src = video.getAttribute('data-src');
-                    // Hide custom UI as iframe has its own controls
                     if (vpControls) vpControls.style.display = 'none';
                     if (soundOverlay) soundOverlay.style.display = 'none';
                 }
+                preloadObserver.disconnect();
+            }
+        });
+    }, { rootMargin: '800px 0px' });
+    
+    const viewportObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                sectionInView = true;
+                checkAndReveal();
+            } else {
+                sectionInView = false;
             }
         });
     }, { threshold: 0.3 });
 
-    videoObserver.observe(video);
+    preloadObserver.observe(video);
+    viewportObserver.observe(video);
 
     // ── Sound overlay click → unmute ──
     if (soundOverlay) {
