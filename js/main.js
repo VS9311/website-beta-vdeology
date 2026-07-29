@@ -1217,7 +1217,7 @@ window.initInfluence = function () {
     }
 
     function onScroll() {
-        if (!isMastersInView) return;
+        if (!isInfluenceInView) return;
         const rect = section.getBoundingClientRect();
         const sectionTop = -rect.top;
         const scrollHeight = window.innerHeight * 2.0; // matches the 200vh spacer exactly
