@@ -91,40 +91,7 @@
     padding-bottom: clamp(120px, 16vh, 220px);
 }
 
-.begin-placeholder {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    background: #0a0a0c;
-    border: 1px solid rgba(255, 255, 255, 0.04);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
 
-.begin-placeholder-label {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.6rem;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.12);
-    user-select: none;
-}
-
-/* Subtle inner glow on placeholder */
-.begin-placeholder::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-        ellipse at center,
-        rgba(255, 255, 255, 0.012) 0%,
-        transparent 65%
-    );
-    pointer-events: none;
-}
 
 /* ===== WHAT HAPPENS NEXT ===== */
 .begin-sequence-area {

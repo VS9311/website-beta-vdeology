@@ -14,11 +14,16 @@
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=2" />
     <link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png?v=2" />
     <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png?v=2" />
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://player.mediadelivery.net" />
+    <link rel="dns-prefetch" href="https://player.mediadelivery.net" />
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link rel="dns-prefetch" href="https://api.fontshare.com" />
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link
-        href="https://fonts.googleapis.com/css2?family=Anton&amp;family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Epilogue:wght@100..900&amp;family=Manrope:wght@200..800&amp;family=IBM+Plex+Mono:wght@300;400;500;600&amp;family=Inter:wght@400;500&amp;display=swap"
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&amp;family=Inter:wght@400;500&amp;display=swap"
         rel="stylesheet" />
     <!-- Fontshare for General Sans -->
     <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet" />
@@ -168,7 +173,7 @@
         <!-- ───── WELCOME VIDEO ───── -->
         <section class="begin-section begin-video-area">
             <div class="begin-reveal begin-reveal-delay-1" style="width: 100%; aspect-ratio: 16/9; background: #0a0a0c; border: 1px solid rgba(255, 255, 255, 0.04); overflow: hidden; position: relative;">
-                <iframe id="onboarding-video" class="w-full h-full object-cover" 
+                <iframe title="Onboarding Video" loading="lazy" id="onboarding-video" class="w-full h-full object-cover" 
                     data-src="https://player.mediadelivery.net/embed/680285/c636e7de-d1cf-47e1-b806-da6d30afdfba?autoplay=true&loop=false&muted=true&preload=true&responsive=true" 
                     style="border:none;" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen>
                 </iframe>
